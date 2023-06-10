@@ -1,13 +1,15 @@
 cmake_minimum_required (VERSION 3.24 FATAL_ERROR)
 
 find_package(Threads REQUIRED)
+add_stream()
 
 set(TESTS
-  timer/basic
+  lexical_cast/basic
   )
 
 set(LIBRARIES
-  timer
+  lexical_cast
+  stream::stream
   GTest::gtest
   Threads::Threads
   )
