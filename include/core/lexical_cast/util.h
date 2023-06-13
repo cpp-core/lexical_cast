@@ -61,17 +61,23 @@ Iter find_first(Iter iter, Iter end, char c) {
 }
 
 template<class Iter>
+bool matching_delims(Iter iter, Iter end) {
+    if (*iter == OpenCurly and end - 1 == find_close(iter + 1, end, CloseCurly))
+	return true;
+    if (*iter == OpenBracket and end - 1 == find_close(iter + 1, end, CloseBracket))
+	return true;
+    return false;
+}
+
+template<class Iter>
 std::pair<Iter,Iter> unwrap(Iter iter, Iter end) {
     while (iter < end and std::isspace(*iter))
 	++iter;
     while (end > iter and std::isspace(*(end - 1)))
 	--end;
-    if (iter < end) {
-	if ((*iter == OpenCurly and *(end - 1) == CloseCurly) or
-	    (*iter == OpenBracket and *(end - 1) == CloseBracket)) {
-	    ++iter;
-	    --end;
-	}
+    if (iter < end and matching_delims(iter, end)) {
+	++iter;
+	--end;
     }
     return {iter, end};
 }

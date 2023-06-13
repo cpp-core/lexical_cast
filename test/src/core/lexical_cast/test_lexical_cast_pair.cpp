@@ -18,7 +18,7 @@ TEST(LexicalCast, PairIntString)
     }
 }
 
-TEST(LexicalCast, NestedPair)
+TEST(LexicalCast, PairNestedPair)
 {
     using InnerPair = std::pair<int,std::string>;
     using Pair = std::pair<InnerPair,float>;

@@ -4,8 +4,12 @@ find_package(Threads REQUIRED)
 add_stream()
 
 set(TESTS
+  lexical_cast/array
   lexical_cast/basic
   lexical_cast/pair
+  lexical_cast/tuple
+  lexical_cast/util
+  lexical_cast/vector
   )
 
 set(LIBRARIES
