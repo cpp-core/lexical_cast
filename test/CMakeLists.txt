@@ -5,6 +5,7 @@ add_stream()
 
 set(TESTS
   lexical_cast/basic
+  lexical_cast/pair
   )
 
 set(LIBRARIES
