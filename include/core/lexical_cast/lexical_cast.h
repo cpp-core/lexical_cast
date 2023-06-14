@@ -21,10 +21,6 @@ struct lexical_cast_impl<bool>
 { static bool parse(std::string_view); };
 
 template<>
-struct lexical_cast_impl<char>
-{ static char parse(std::string_view); };
-
-template<>
 struct lexical_cast_impl<std::string>
 { static std::string parse(std::string_view); };
 
@@ -33,40 +29,44 @@ struct lexical_cast_impl<const char*>
 { static const char* parse(std::string_view); };
 
 template<>
-struct lexical_cast_impl<std::uint8_t>
-{ static std::uint8_t parse(std::string_view s); };
+struct lexical_cast_impl<unsigned char>
+{ static unsigned char parse(std::string_view); };
 
 template<>
-struct lexical_cast_impl<std::uint16_t>
-{ static std::uint16_t parse(std::string_view s); };
+struct lexical_cast_impl<unsigned short>
+{ static unsigned short parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::uint32_t>
-{ static std::uint32_t parse(std::string_view s); };
+struct lexical_cast_impl<unsigned int>
+{ static unsigned int parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::uint64_t>
-{ static std::uint64_t parse(std::string_view s); };
+struct lexical_cast_impl<unsigned long>
+{ static unsigned long parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::size_t>
-{ static std::size_t parse(std::string_view s); };
+struct lexical_cast_impl<unsigned long long>
+{ static unsigned long long parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::int8_t>
-{ static std::int8_t parse(std::string_view s); };
+struct lexical_cast_impl<signed char>
+{ static signed char parse(std::string_view); };
 
 template<>
-struct lexical_cast_impl<std::int16_t>
-{ static std::int16_t parse(std::string_view s); };
+struct lexical_cast_impl<signed short>
+{ static signed short parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::int32_t>
-{ static std::int32_t parse(std::string_view s); };
+struct lexical_cast_impl<signed int>
+{ static signed int parse(std::string_view s); };
 
 template<>
-struct lexical_cast_impl<std::int64_t>
-{ static std::int64_t parse(std::string_view s); };
+struct lexical_cast_impl<signed long>
+{ static signed long parse(std::string_view s); };
+
+template<>
+struct lexical_cast_impl<signed long long>
+{ static signed long long parse(std::string_view s); };
 
 template<>
 struct lexical_cast_impl<float>

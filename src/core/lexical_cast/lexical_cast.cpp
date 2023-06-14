@@ -44,9 +44,6 @@ bool lexical_cast_impl<bool>::parse(std::string_view input)
     throw lexical_cast_error(input, "bool");
 }
 
-char lexical_cast_impl<char>::parse(std::string_view input)
-{ return input[0]; }
-
 std::string lexical_cast_impl<std::string>::parse(std::string_view input)
 { return std::string(input); }
 
@@ -83,11 +80,10 @@ T parse_integral(std::string_view input)
     }
 }
 
-#define CODE(T)						\
+#define CODE(T)							\
     T lexical_cast_impl<T>::parse(std::string_view input)	\
     { return parse_integral<T>(input); }
-CORE_PP_EVAL_MAP(CODE, std::int8_t, std::int16_t, std::int32_t, std::int64_t,
-		 std::uint8_t, std::uint16_t, std::uint32_t, std::uint64_t);
+CORE_PP_EVAL_MAP(CODE, unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long, signed char, signed short, signed int, signed long, signed long long);
 #undef CODE
 
 template<class T>
