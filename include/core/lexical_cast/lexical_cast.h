@@ -49,6 +49,10 @@ struct lexical_cast_impl<std::uint64_t>
 { static std::uint64_t parse(std::string_view s); };
 
 template<>
+struct lexical_cast_impl<std::size_t>
+{ static std::size_t parse(std::string_view s); };
+
+template<>
 struct lexical_cast_impl<std::int8_t>
 { static std::int8_t parse(std::string_view s); };
 
