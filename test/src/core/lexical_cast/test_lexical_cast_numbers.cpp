@@ -2,18 +2,13 @@
 //
 
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast.h"
+#include "core/lexical_cast/lexical_cast_numbers.h"
+#include "core/lexical_cast/lexical_cast_error.h"
 #include "core/mp/traits/extrema.h"
 #include "coro/stream/stream.h"
 
 using namespace core;
 using namespace std::string_literals;
-
-TEST(LexicalCast, String)
-{
-    std::string s = lexical_cast<std::string>("abc"s);
-    EXPECT_EQ(s, "abc");
-}
 
 template<typename T>
 struct number_test
@@ -53,6 +48,66 @@ void hex_test() {
 	auto m = lexical_cast<T>(s);
 	EXPECT_EQ(m, n);
     }
+}
+
+TEST(LexicalCase, SignedChar)
+{
+    number_test<signed char>::apply();
+    hex_test<signed char>();
+}
+
+TEST(LexicalCase, SignedShort)
+{
+    number_test<signed short>::apply();
+    hex_test<signed short>();
+}
+
+TEST(LexicalCase, SignedInt)
+{
+    number_test<signed int>::apply();
+    hex_test<signed int>();
+}
+
+TEST(LexicalCase, SignedLong)
+{
+    number_test<signed long>::apply();
+    hex_test<signed long>();
+}
+
+TEST(LexicalCase, SignedLongLong)
+{
+    number_test<signed long long>::apply();
+    hex_test<signed long long>();
+}
+
+TEST(LexicalCase, UnsignedChar)
+{
+    number_test<unsigned char>::apply();
+    hex_test<unsigned char>();
+}
+
+TEST(LexicalCase, UnsignedShort)
+{
+    number_test<unsigned short>::apply();
+    hex_test<unsigned short>();
+}
+
+TEST(LexicalCase, UnsignedInt)
+{
+    number_test<unsigned int>::apply();
+    hex_test<unsigned int>();
+}
+
+TEST(LexicalCase, UnsignedLong)
+{
+    number_test<unsigned long>::apply();
+    hex_test<unsigned long>();
+}
+
+TEST(LexicalCase, UnsignedLongLong)
+{
+    number_test<unsigned long long>::apply();
+    hex_test<unsigned long long>();
 }
 
 TEST(LexicalCast, Int8)
@@ -104,14 +159,19 @@ TEST(LexicalCast, Uint64)
 }
 
 TEST(LexicalCast, Real32)
-{ number_test<float>::apply(); }
+{
+    number_test<float>::apply();
+}
 
 TEST(LexicalCast, Real64)
-{ number_test<double>::apply(); }
+{
+    number_test<double>::apply();
+}
 
 TEST(LexicalCast, Real128)
-{ number_test<long double>::apply(); }
-
+{
+    number_test<long double>::apply();
+}
 
 int main(int argc, char *argv[])
 {

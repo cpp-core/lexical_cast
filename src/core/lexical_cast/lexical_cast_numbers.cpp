@@ -1,21 +1,14 @@
-// Copyright (C) 2017, 2018, 2019, 2021, 2022 by Mark Melton
+// Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
 //
 
+
 #include <charconv>
-#include <string_view>
-#include <fmt/printf.h>
 #include "core/mp/traits/type.h"
-#include "core/lexical_cast/lexical_cast.h"
+#include "core/lexical_cast/lexical_cast_numbers.h"
+#include "core/lexical_cast/lexical_cast_error.h"
 #include "core/pp/map.h"
 
-namespace core {
-
-lexical_cast_error::lexical_cast_error(std::string_view input, std::string_view type)
-    : std::runtime_error(fmt::sprintf("cannot parse '%s' as '%s'", input, type))
-{ }
-
-namespace lexical_cast_detail
-{
+namespace core::lexical_cast_detail {
 
 std::from_chars_result from_chars(const char *begin, const char *end, float& value)
 {
@@ -34,28 +27,6 @@ std::from_chars_result from_chars(const char *begin, const char *end, long doubl
     value = stold(std::string(begin, end - begin));
     return { end };
 }
-
-bool lexical_cast_impl<bool>::parse(std::string_view input)
-{
-    if (input == "0" or input == "f" or input == "F" or input == "false")
-	return false;
-    if (input == "1" or input == "t" or input == "T" or input == "true")
-	return true;
-    throw lexical_cast_error(input, "bool");
-}
-
-char lexical_cast_impl<char>::parse(std::string_view input)
-{
-    if (input.size() == 0)
-	throw lexical_cast_error(input, "char");
-    return input[0];
-}
-
-std::string lexical_cast_impl<std::string>::parse(std::string_view input)
-{ return std::string(input); }
-
-const char* lexical_cast_impl<const char*>::parse(std::string_view input)
-{ return input.begin(); }
 
 template<class T>
 T parse_integral(std::string_view input)
@@ -120,6 +91,4 @@ T parse_floating_point(std::string_view input)
 CORE_PP_EVAL_MAP(CODE, float, double, long double);
 #undef CODE
 
-}; // lexical_casst_detail
-
-}; // end core
+}; // core::lexical_casst_detail

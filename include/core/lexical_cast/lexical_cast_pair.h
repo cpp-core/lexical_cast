@@ -3,6 +3,7 @@
 
 #pragma once
 #include "lexical_cast.h"
+#include "lexical_cast_error.h"
 #include "util.h"
 
 namespace core::lexical_cast_detail

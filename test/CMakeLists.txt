@@ -5,8 +5,10 @@ add_stream()
 
 set(TESTS
   lexical_cast/array
-  lexical_cast/basic
+  lexical_cast/bool
+  lexical_cast/numbers
   lexical_cast/pair
+  lexical_cast/string
   lexical_cast/tuple
   lexical_cast/util
   lexical_cast/vector
