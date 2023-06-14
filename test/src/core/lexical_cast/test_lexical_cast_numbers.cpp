@@ -2,13 +2,13 @@
 //
 
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast_numbers.h"
-#include "core/lexical_cast/lexical_cast_error.h"
+#include "core/lexical_cast/floating.h"
+#include "core/lexical_cast/integral.h"
+#include "core/lexical_cast/error.h"
 #include "core/mp/traits/extrema.h"
 #include "coro/stream/stream.h"
 
 using namespace core;
-using namespace std::string_literals;
 
 template<typename T>
 struct number_test

@@ -62,10 +62,12 @@ add_mp()
 # Build the library
 #
 set(SOURCES
-  lexical_cast_bool
-  lexical_cast_error
-  lexical_cast_numbers
-  lexical_cast_string
+  bool
+  char
+  error
+  floating
+  integral
+  string
   )
 
 set(FILES)

@@ -2,23 +2,14 @@
 //
 
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast.h"
-#include "core/mp/traits/extrema.h"
-#include "coro/stream/stream.h"
+#include "core/lexical_cast/string.h"
 
 using namespace core;
-using namespace std::string_literals;
 
 TEST(LexicalCast, String)
 {
-    std::string s = lexical_cast<std::string>("abc"s);
+    std::string s = lexical_cast<std::string>("abc");
     EXPECT_EQ(s, "abc");
-}
-
-TEST(LexicalCast, Char)
-{
-    char c = lexical_cast<char>("a"s);
-    EXPECT_EQ(c, 'a');
 }
 
 int main(int argc, char *argv[])

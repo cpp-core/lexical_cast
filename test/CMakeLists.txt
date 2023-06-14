@@ -6,6 +6,7 @@ add_stream()
 set(TESTS
   lexical_cast/array
   lexical_cast/bool
+  lexical_cast/char
   lexical_cast/numbers
   lexical_cast/pair
   lexical_cast/string

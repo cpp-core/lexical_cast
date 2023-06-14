@@ -2,7 +2,7 @@
 //
 
 #include <fmt/format.h>
-#include "core/lexical_cast/lexical_cast_error.h"
+#include "core/lexical_cast/error.h"
 
 namespace core {
 

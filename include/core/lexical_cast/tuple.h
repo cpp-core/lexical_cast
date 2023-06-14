@@ -5,12 +5,11 @@
 #include <string>
 #include <tuple>
 #include <vector>
-#include "lexical_cast.h"
-#include "lexical_cast_error.h"
+#include "builtin.h"
+#include "error.h"
 #include "util.h"
 
-namespace core::lexical_cast_detail
-{
+namespace core::lexical_cast_detail {
 
 template<class T, size_t... I>
 auto create_tuple(const std::vector<std::string_view>& fields, std::index_sequence<I...>) {

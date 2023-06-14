@@ -3,12 +3,11 @@
 
 #pragma once
 #include <array>
-#include "lexical_cast.h"
-#include "lexical_cast_error.h"
+#include "builtin.h"
+#include "error.h"
 #include "util.h"
 
-namespace core::lexical_cast_detail
-{
+namespace core::lexical_cast_detail {
 
 template<class T, size_t N>
 struct lexical_cast_impl<std::array<T, N>> {

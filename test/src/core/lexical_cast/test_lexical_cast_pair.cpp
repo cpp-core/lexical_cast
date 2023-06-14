@@ -3,10 +3,10 @@
 
 #include <string>
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast_pair.h"
+#include "core/lexical_cast/pair.h"
+#include "core/lexical_cast/string.h"
 
 using namespace core;
-using namespace std::string_literals;
 
 TEST(LexicalCast, PairIntString)
 {
@@ -33,7 +33,7 @@ TEST(LexicalCast, PairNestedPair)
 
 TEST(LexicalCast, PairThrow)
 {
-    EXPECT_THROW((lexical_cast<std::pair<int,std::string>>("12x:abc"s)), lexical_cast_error);
+    EXPECT_THROW((lexical_cast<std::pair<int,std::string>>("12x:abc")), lexical_cast_error);
 }
 
 int main(int argc, char *argv[])

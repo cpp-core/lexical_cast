@@ -1,12 +1,11 @@
 // Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
 //
 
-#include <string>
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast_tuple.h"
+#include "core/lexical_cast/tuple.h"
+#include "core/lexical_cast/string.h"
 
 using namespace core;
-using namespace std::string_literals;
 
 TEST(LexicalCast, TupleIntString)
 {
@@ -19,9 +18,9 @@ TEST(LexicalCast, TupleIntString)
 
 TEST(LexicalCast, ArrayThrow)
 {
-    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123,abc"s)), lexical_cast_error);
-    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123"s)), lexical_cast_error);
-    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123,456,789"s)), lexical_cast_error);
+    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123,abc")), lexical_cast_error);
+    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123")), lexical_cast_error);
+    EXPECT_THROW((lexical_cast<std::tuple<int, int>>("123,456,789")), lexical_cast_error);
 }
 
 int main(int argc, char *argv[])

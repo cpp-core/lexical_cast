@@ -1,13 +1,12 @@
 // Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
 //
 
-#include <string>
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast_vector.h"
-#include "core/lexical_cast/lexical_cast_pair.h"
+#include "core/lexical_cast/vector.h"
+#include "core/lexical_cast/pair.h"
+#include "core/lexical_cast/string.h"
 
 using namespace core;
-using namespace std::string_literals;
 
 TEST(LexicalCast, VectorInt)
 {
@@ -42,7 +41,7 @@ TEST(LexicalCast, VectorPair)
 
 TEST(LexicalCast, VectorThrow)
 {
-    EXPECT_THROW((lexical_cast<std::vector<int>>("123,abc"s)), lexical_cast_error);
+    EXPECT_THROW((lexical_cast<std::vector<int>>("123,abc")), lexical_cast_error);
 }
 
 int main(int argc, char *argv[])

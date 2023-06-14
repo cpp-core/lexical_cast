@@ -2,8 +2,8 @@
 //
 
 #include <gtest/gtest.h>
-#include "core/lexical_cast/lexical_cast_bool.h"
-#include "core/lexical_cast/lexical_cast_error.h"
+#include "core/lexical_cast/bool.h"
+#include "core/lexical_cast/error.h"
 
 using namespace core;
 

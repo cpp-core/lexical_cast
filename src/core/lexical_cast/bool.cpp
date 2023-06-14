@@ -1,8 +1,8 @@
 // Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
 //
 
-#include "core/lexical_cast/lexical_cast_bool.h"
-#include "core/lexical_cast/lexical_cast_error.h"
+#include "core/lexical_cast/bool.h"
+#include "core/lexical_cast/error.h"
 
 namespace core::lexical_cast_detail {
 

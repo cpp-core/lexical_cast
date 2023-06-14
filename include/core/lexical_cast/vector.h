@@ -3,11 +3,10 @@
 
 #pragma once
 #include <vector>
-#include "lexical_cast.h"
+#include "builtin.h"
 #include "util.h"
 
-namespace core::lexical_cast_detail
-{
+namespace core::lexical_cast_detail {
 
 template<class T>
 struct lexical_cast_impl<std::vector<T>> {
