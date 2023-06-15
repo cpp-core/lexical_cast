@@ -6,21 +6,24 @@
 #include "core/lexical_cast/error.h"
 
 using namespace core;
+using namespace std::string_literals;
 
-TEST(LexicalCast, Bool)
+TEST(LexicalCast, BoolFromString)
 {
-    EXPECT_EQ(lexical_cast<bool>("0"), false);
-    EXPECT_EQ(lexical_cast<bool>("f"), false);
-    EXPECT_EQ(lexical_cast<bool>("F"), false);
-    EXPECT_EQ(lexical_cast<bool>("false"), false);
+    for (auto str : {"0", "f", "F", "false"}) 
+	EXPECT_FALSE(lexical_cast<bool>(str));
 
-    EXPECT_EQ(lexical_cast<bool>("1"), true);
-    EXPECT_EQ(lexical_cast<bool>("t"), true);
-    EXPECT_EQ(lexical_cast<bool>("T"), true);
-    EXPECT_EQ(lexical_cast<bool>("true"), true);
+    for (auto str : {"1", "t", "T", "true"})
+     	EXPECT_TRUE(lexical_cast<bool>(str));
 }
 
-TEST(LexicalCast, BoolThrow)
+TEST(LexicalCast, BoolToString)
+{
+    EXPECT_EQ(lexical_to_string(true), "t");
+    EXPECT_EQ(lexical_to_string(false), "f");
+}
+
+TEST(LexicalCast, BoolFromStringThrow)
 {
     EXPECT_THROW(lexical_cast<bool>(""), lexical_cast_error);
     EXPECT_THROW(lexical_cast<bool>("2"), lexical_cast_error);

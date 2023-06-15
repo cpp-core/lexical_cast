@@ -33,8 +33,7 @@ struct number_test
 	    std::string s = fmt::format(fmt::runtime(mp::extrema<T>::fmt_spec()), value);
 	    auto n = lexical_cast<T>(s);
 	    EXPECT_EQ(value, n);
-	    std::string s2 = fmt::format(fmt::runtime(mp::extrema<T>::fmt_spec()), n);
-	    EXPECT_EQ(s, s2);
+	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(n)), n);
 	}
     }
 };
@@ -47,64 +46,65 @@ void hex_test() {
 	auto s = fmt::format("0x{:x}", n);
 	auto m = lexical_cast<T>(s);
 	EXPECT_EQ(m, n);
+	EXPECT_EQ(lexical_cast<T>(lexical_to_string(m)), m);
     }
 }
 
-TEST(LexicalCase, SignedChar)
+TEST(LexicalCast, SignedChar)
 {
     number_test<signed char>::apply();
     hex_test<signed char>();
 }
 
-TEST(LexicalCase, SignedShort)
+TEST(LexicalCast, SignedShort)
 {
     number_test<signed short>::apply();
     hex_test<signed short>();
 }
 
-TEST(LexicalCase, SignedInt)
+TEST(LexicalCast, SignedInt)
 {
     number_test<signed int>::apply();
     hex_test<signed int>();
 }
 
-TEST(LexicalCase, SignedLong)
+TEST(LexicalCast, SignedLong)
 {
     number_test<signed long>::apply();
     hex_test<signed long>();
 }
 
-TEST(LexicalCase, SignedLongLong)
+TEST(LexicalCast, SignedLongLong)
 {
     number_test<signed long long>::apply();
     hex_test<signed long long>();
 }
 
-TEST(LexicalCase, UnsignedChar)
+TEST(LexicalCast, UnsignedChar)
 {
     number_test<unsigned char>::apply();
     hex_test<unsigned char>();
 }
 
-TEST(LexicalCase, UnsignedShort)
+TEST(LexicalCast, UnsignedShort)
 {
     number_test<unsigned short>::apply();
     hex_test<unsigned short>();
 }
 
-TEST(LexicalCase, UnsignedInt)
+TEST(LexicalCast, UnsignedInt)
 {
     number_test<unsigned int>::apply();
     hex_test<unsigned int>();
 }
 
-TEST(LexicalCase, UnsignedLong)
+TEST(LexicalCast, UnsignedLong)
 {
     number_test<unsigned long>::apply();
     hex_test<unsigned long>();
 }
 
-TEST(LexicalCase, UnsignedLongLong)
+TEST(LexicalCast, UnsignedLongLong)
 {
     number_test<unsigned long long>::apply();
     hex_test<unsigned long long>();

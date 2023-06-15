@@ -6,12 +6,17 @@
 
 namespace core::lexical_cast_detail {
 
-bool lexical_cast_impl<bool>::parse(std::string_view input) {
+bool lexical_cast_impl<bool>::convert(std::string_view input) const {
     if (input == "0" or input == "f" or input == "F" or input == "false")
 	return false;
     if (input == "1" or input == "t" or input == "T" or input == "true")
 	return true;
     throw lexical_cast_error(input, "bool");
+}
+
+std::string lexical_cast_impl<bool>::to_string(bool input) const {
+    if (input) return "t";
+    else return "f";
 }
 
 }; // end core::lexical_cast_detail

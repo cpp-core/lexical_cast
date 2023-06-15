@@ -2,23 +2,30 @@
 //
 
 #include <iostream>
-#include "core/lexical_cast/builtin.h"
-#include "core/mp/type_name.h"
+#include "core/lexical_cast/bool.h"
+#include "core/lexical_cast/char.h"
+#include "core/lexical_cast/floating.h"
+#include "core/lexical_cast/integral.h"
+#include "core/lexical_cast/string.h"
 
 using namespace core;
 using std::cout, std::endl;
 
 int main(int argc, const char *argv[]) {
-    cout << mp::type_name<uint8_t>() << endl;
-    cout << mp::type_name<uint16_t>() << endl;
-    cout << mp::type_name<uint32_t>() << endl;
-    cout << mp::type_name<uint64_t>() << endl;
+    cout << std::boolalpha;
+    cout << lexical_cast<bool>("t") << endl;
+    cout << lexical_cast(true) << endl;
+
     cout << endl;
-    cout << mp::type_name<int8_t>() << endl;
-    cout << mp::type_name<int16_t>() << endl;
-    cout << mp::type_name<int32_t>() << endl;
-    cout << mp::type_name<int64_t>() << endl;
+    cout << lexical_cast<char>("a") << endl;
+    cout << lexical_cast('a') << endl;
+
     cout << endl;
-    cout << mp::type_name<size_t>() << endl;
+    cout << lexical_cast<float>("1.23") << endl;
+    cout << lexical_cast(1.23) << endl;
+
+    cout << endl;
+    cout << lexical_cast<int>("123") << endl;
+    cout << lexical_cast(123) << endl;
     return 0;
 }

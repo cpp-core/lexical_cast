@@ -8,17 +8,20 @@ namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<float> {
-    static float parse(std::string_view s);
+    float convert(std::string_view) const;
+    std::string to_string(float) const;
 };
 
 template<>
 struct lexical_cast_impl<double> {
-    static double parse(std::string_view s);
+    double convert(std::string_view s) const;
+    std::string to_string(double) const;
 };
 
 template<>
 struct lexical_cast_impl<long double> {
-    static long double parse(std::string_view s);
+    long double convert(std::string_view s) const;
+    std::string to_string(long double) const;
 };
 
 }; // core::lexical_cast_detail

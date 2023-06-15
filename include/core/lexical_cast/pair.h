@@ -11,7 +11,7 @@ namespace core::lexical_cast_detail {
 
 template<class T, class U>
 struct lexical_cast_impl<std::pair<T,U>> {
-    static std::pair<T,U> parse(std::string_view s) {
+    std::pair<T,U> convert(std::string_view s) const {
 	auto [begin, end] = unwrap(s.begin(), s.end());
 	auto iter = find_first(begin, end, ':');
 	if (iter >= end)
@@ -20,6 +20,15 @@ struct lexical_cast_impl<std::pair<T,U>> {
 	auto first = lexical_cast<T>({begin, iter});
 	auto second = lexical_cast<U>({iter + 1, end});
 	return {first, second};
+    }
+
+    std::string to_string(const std::pair<T, U>& pair) const {
+	std::string r = "{";
+	r += lexical_to_string(pair.first);
+	r += ":";
+	r += lexical_to_string(pair.second);
+	r += "}";
+	return r;
     }
 };
 

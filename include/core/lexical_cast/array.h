@@ -11,7 +11,7 @@ namespace core::lexical_cast_detail {
 
 template<class T, size_t N>
 struct lexical_cast_impl<std::array<T, N>> {
-    static std::array<T, N> parse(std::string_view s) {
+    std::array<T, N> convert(std::string_view s) const {
 	auto [iter, end] = unwrap(s.begin(), s.end());
 	size_t idx{};
 	std::array<T, N> arr{};
@@ -26,6 +26,17 @@ struct lexical_cast_impl<std::array<T, N>> {
 	if (idx < N)
 	    throw lexical_cast_error(s, "too few elements for std::array");
 	return arr;
+    }
+
+    std::string to_string(const std::array<T, N>& arr) const {
+	std::string r = "[";
+	for (auto elem : arr) {
+	    if (r.size() > 1)
+		r += ",";
+	    r += lexical_to_string(elem);
+	}
+	r += "]";
+	return r;
     }
 };
 

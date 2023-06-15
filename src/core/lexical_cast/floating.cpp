@@ -46,9 +46,12 @@ T parse_floating_point(std::string_view input)
     }
 }
 
-#define CODE(T)							\
-    T lexical_cast_impl<T>::parse(std::string_view input)	\
-    { return parse_floating_point<T>(input); }
+#define CODE(T)								\
+    T lexical_cast_impl<T>::convert(std::string_view input) const	\
+    { return parse_floating_point<T>(input); }				\
+    std::string lexical_cast_impl<T>::to_string(T input) const		\
+    { return std::to_string(input); }
+
 CORE_PP_EVAL_MAP(CODE, float, double, long double);
 #undef CODE
 

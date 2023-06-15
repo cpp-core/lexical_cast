@@ -9,12 +9,24 @@ namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<std::string> {
-    static std::string parse(std::string_view);
+    std::string convert(std::string_view) const;
+    std::string to_string(std::string_view) const;
 };
 
 template<>
 struct lexical_cast_impl<const char*> {
-    static const char* parse(std::string_view);
+    const char* convert(std::string_view) const;
+    std::string to_string(const char *) const;
+};
+
+template<size_t N>
+struct lexical_cast_impl<char[N]> {
+    const char* convert(std::string_view input) const {
+	return input.begin();
+    }
+    std::string to_string(const char *input) const {
+	return {input};
+    }
 };
 
 }; // core::lexical_cast_detail

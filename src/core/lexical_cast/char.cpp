@@ -6,10 +6,14 @@
 
 namespace core::lexical_cast_detail {
 
-char lexical_cast_impl<char>::parse(std::string_view input) {
+char lexical_cast_impl<char>::convert(std::string_view input) const {
     if (input.size() == 0)
 	throw lexical_cast_error(input, "char");
     return input[0];
+}
+
+std::string lexical_cast_impl<char>::to_string(char input) const {
+    return {input};
 }
 
 }; // end core::lexical_cast_detail

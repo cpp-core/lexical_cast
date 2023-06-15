@@ -40,10 +40,17 @@ T parse_integral(std::string_view input)
     }
 }
 
-#define CODE(T)							\
-    T lexical_cast_impl<T>::parse(std::string_view input)	\
-    { return parse_integral<T>(input); }
-CORE_PP_EVAL_MAP(CODE, unsigned char, unsigned short, unsigned int, unsigned long, unsigned long long, signed char, signed short, signed int, signed long, signed long long);
+#define CODE(T)								\
+    T lexical_cast_impl<T>::convert(std::string_view input) const	\
+    { return parse_integral<T>(input); }				\
+    std::string lexical_cast_impl<T>::to_string(T input) const		\
+    { return std::to_string(input); }
+
+CORE_PP_EVAL_MAP(CODE,							\
+		 unsigned char, unsigned short, unsigned int,		\
+		 unsigned long,	unsigned long long,			\
+		 signed char, signed short, signed int,			\
+		 signed long, signed long long);
 #undef CODE
 
 }; // core::lexical_casst_detail

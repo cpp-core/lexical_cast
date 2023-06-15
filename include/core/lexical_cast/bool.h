@@ -8,7 +8,8 @@ namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<bool> {
-    static bool parse(std::string_view);
+    bool convert(std::string_view) const;
+    std::string to_string(bool) const;
 };
 
 }; // core::lexical_cast_detail

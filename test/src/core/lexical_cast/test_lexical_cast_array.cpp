@@ -17,6 +17,7 @@ TEST(LexicalCast, ArrayInt)
 	EXPECT_EQ(arr[0], 123);
 	EXPECT_EQ(arr[1], 456);
 	EXPECT_EQ(arr[2], 789);
+	EXPECT_EQ(lexical_to_string(arr), "[123,456,789]");
     }
 }
 

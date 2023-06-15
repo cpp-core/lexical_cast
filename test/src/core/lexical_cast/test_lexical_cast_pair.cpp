@@ -12,9 +12,11 @@ TEST(LexicalCast, PairIntString)
 {
     using Pair = std::pair<int,std::string>;
     for (auto str : {"123:abc", "{123:abc}"}) {
-	auto [i, s] = lexical_cast<Pair>(str);
+	auto pair = lexical_cast<Pair>(str);
+	auto [i, s] = pair;
 	EXPECT_EQ(i, 123);
 	EXPECT_EQ(s, "abc");
+	EXPECT_EQ(lexical_cast<Pair>(lexical_to_string(pair)), pair);
     }
 }
 
@@ -23,11 +25,13 @@ TEST(LexicalCast, PairNestedPair)
     using InnerPair = std::pair<int,std::string>;
     using Pair = std::pair<InnerPair,float>;
     for (auto str : {"{123:abc}:1.0", "{{123:abc}:1.0}"}) {
-	auto [p, f] = lexical_cast<Pair>(str);
+	auto pair = lexical_cast<Pair>(str);
+	auto [p, f] = pair;
 	auto [i, s] = p;
 	EXPECT_EQ(i, 123);
 	EXPECT_EQ(s, "abc");
 	EXPECT_EQ(f, 1.0);
+	EXPECT_EQ(lexical_cast<Pair>(lexical_to_string(pair)), pair);
     }
 }
 

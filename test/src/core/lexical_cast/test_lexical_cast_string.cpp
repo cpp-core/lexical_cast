@@ -6,9 +6,15 @@
 
 using namespace core;
 
-TEST(LexicalCast, String)
+TEST(LexicalCast, StringFromString)
 {
     std::string s = lexical_cast<std::string>("abc");
+    EXPECT_EQ(s, "abc");
+}
+
+TEST(LexicalCast, StringToString)
+{
+    std::string s = lexical_to_string("abc");
     EXPECT_EQ(s, "abc");
 }
 

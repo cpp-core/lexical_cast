@@ -10,7 +10,7 @@ namespace core::lexical_cast_detail {
 
 template<class T>
 struct lexical_cast_impl<std::vector<T>> {
-    static std::vector<T> parse(std::string_view s) {
+    std::vector<T> convert(std::string_view s) const {
 	auto [iter, end] = unwrap(s.begin(), s.end());
 	std::vector<T> vec;
 	while (iter < end) {
@@ -19,6 +19,17 @@ struct lexical_cast_impl<std::vector<T>> {
 	    iter = delim + 1;
 	}
 	return vec;
+    }
+
+    std::string to_string(const std::vector<T>& vec) const {
+	std::string r = "[";
+	for (auto elem : vec) {
+	    if (r.size() > 1)
+		r += ",";
+	    r += lexical_to_string(elem);
+	}
+	r += "]";
+	return r;
     }
 };
 

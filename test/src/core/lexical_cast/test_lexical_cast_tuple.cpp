@@ -13,6 +13,7 @@ TEST(LexicalCast, TupleIntString)
 	auto tup = lexical_cast<std::tuple<int,std::string>>(str);
 	EXPECT_EQ(std::get<0>(tup), 123);
 	EXPECT_EQ(std::get<1>(tup), "abc");
+	EXPECT_EQ(lexical_to_string(tup), "{123,abc}");
     }
 }
 

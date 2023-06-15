@@ -7,10 +7,14 @@
 
 using namespace core;
 
-TEST(LexicalCast, Char)
+TEST(LexicalCast, CharFromString)
 {
-    char c = lexical_cast<char>("a");
-    EXPECT_EQ(c, 'a');
+    EXPECT_EQ(lexical_cast<char>("a"), 'a');
+}
+
+TEST(LexicalCast, CharToString)
+{
+    EXPECT_EQ(lexical_to_string('a'), "a");
 }
 
 TEST(LexicalCast, CharThrow)

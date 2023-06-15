@@ -16,6 +16,7 @@ TEST(LexicalCast, VectorInt)
 	EXPECT_EQ(vec[0], 123);
 	EXPECT_EQ(vec[1], 456);
 	EXPECT_EQ(vec[2], 789);
+	EXPECT_EQ(lexical_to_string(vec), "[123,456,789]");
     }
 }
 

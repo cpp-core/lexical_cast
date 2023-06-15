@@ -2,7 +2,10 @@
 //
 
 #pragma once
+#include <string>
 #include <string_view>
+#include <iostream>
+#include "core/mp/type_name.h"
 
 namespace core {
 
@@ -13,9 +16,14 @@ struct lexical_cast_impl;
 
 }; // lexical_cast_detail
 
-template<class T, class... Us>
-T lexical_cast(std::string_view s, Us... extra) {
-    return lexical_cast_detail::lexical_cast_impl<T>::parse(s, extra...);
+template<class T>
+T lexical_cast(std::string_view input) {
+    return lexical_cast_detail::lexical_cast_impl<T>{}.convert(input);
+}
+
+template<class T>
+std::string lexical_to_string(const T& input) {
+    return lexical_cast_detail::lexical_cast_impl<T>{}.to_string(input);
 }
 
 }; // core

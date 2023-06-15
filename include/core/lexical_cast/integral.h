@@ -8,52 +8,62 @@ namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<unsigned char> {
-    static unsigned char parse(std::string_view);
+    unsigned char convert(std::string_view) const;
+    std::string to_string(unsigned char) const;
 };
 
 template<>
 struct lexical_cast_impl<unsigned short> {
-    static unsigned short parse(std::string_view s);
+    unsigned short convert(std::string_view s) const;
+    std::string to_string(unsigned short) const;
 };
 
 template<>
 struct lexical_cast_impl<unsigned int> {
-    static unsigned int parse(std::string_view s);
+    unsigned int convert(std::string_view s) const;
+    std::string to_string(unsigned int) const;
 };
 
 template<>
 struct lexical_cast_impl<unsigned long> {
-    static unsigned long parse(std::string_view s);
+    unsigned long convert(std::string_view s) const;
+    std::string to_string(unsigned long) const;
 };
 
 template<>
 struct lexical_cast_impl<unsigned long long> {
-    static unsigned long long parse(std::string_view s);
+    unsigned long long convert(std::string_view s) const;
+    std::string to_string(unsigned long long) const;
 };
 
 template<>
 struct lexical_cast_impl<signed char> {
-    static signed char parse(std::string_view);
+    signed char convert(std::string_view) const;
+    std::string to_string(signed char) const;
 };
 
 template<>
 struct lexical_cast_impl<signed short> {
-    static signed short parse(std::string_view s);
+    signed short convert(std::string_view s) const;
+    std::string to_string(signed short) const;
 };
 
 template<>
 struct lexical_cast_impl<signed int> {
-    static signed int parse(std::string_view s);
+    signed int convert(std::string_view s) const;
+    std::string to_string(signed int) const;
 };
 
 template<>
 struct lexical_cast_impl<signed long> {
-    static signed long parse(std::string_view s);
+    signed long convert(std::string_view s) const;
+    std::string to_string(signed long) const;
 };
 
 template<>
 struct lexical_cast_impl<signed long long> {
-    static signed long long parse(std::string_view s);
+    signed long long convert(std::string_view s) const;
+    std::string to_string(signed long long) const;
 };
 
 }; // core::lexical_cast_detail

@@ -6,12 +6,20 @@
 
 namespace core::lexical_cast_detail {
 
-std::string lexical_cast_impl<std::string>::parse(std::string_view input) {
+std::string lexical_cast_impl<std::string>::convert(std::string_view input) const {
     return std::string(input);
 }
 
-const char* lexical_cast_impl<const char*>::parse(std::string_view input) {
+std::string lexical_cast_impl<std::string>::to_string(std::string_view input) const {
+    return std::string(input);
+}
+
+const char* lexical_cast_impl<const char*>::convert(std::string_view input) const {
     return input.begin();
+}
+
+std::string lexical_cast_impl<const char*>::to_string(const char *input) const {
+    return {input};
 }
 
 }; // end core::lexical_cast_detail
