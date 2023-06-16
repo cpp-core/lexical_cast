@@ -4,13 +4,13 @@
 #include <gtest/gtest.h>
 #include "core/lexical_cast/tuple.h"
 #include "core/lexical_cast/string.h"
-#include "coro/stream/stream.h"
-#include "core/mp/foreach.h"
+#include "testing.h"
 
-using namespace core;
-using namespace coro;
+using namespace std::string_literals;
 
-// inline constexpr auto NumberSamples = 4;
+// inline constexpr auto NumberSamples = 64;
+
+CHECK_LEXICAL();
 
 // using test_types = core::mp::list_t
 //     <std::tuple<unsigned int,std::string>,
@@ -19,22 +19,15 @@ using namespace coro;
 
 // TEST(LexicalCast, TupleGenerative)
 // {
-//     auto test = []<class T>() {
-// 	for (auto s : sampler<T>() | take(NumberSamples))
-// 	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);
-//     };
-
-//     core::mp::foreach<test_types>(test);
+//     UNIVERSAL_TEST(test);
+//     foreach<test_types>(test, NumberSamples);
 // }
 
-TEST(LexicalCast, TupleIntString)
+TEST(LexicalCast, TupleConvert)
 {
-    for (auto str : {"123,abc", "{123,abc}"}) {
-	auto tup = lexical_cast<std::tuple<int,std::string>>(str);
-	EXPECT_EQ(std::get<0>(tup), 123);
-	EXPECT_EQ(std::get<1>(tup), "abc");
-	EXPECT_EQ(lexical_to_string(tup), "{123,\"abc\"}");
-    }
+    auto tup0 = std::make_tuple(123, "abc"s);
+    check_lexical("123,abc", tup0);
+    check_lexical("{123,abc}", tup0);
 }
 
 TEST(LexicalCast, TupleThrow)

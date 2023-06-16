@@ -19,15 +19,15 @@ TEST(LexicalCast, PairGenerative)
     foreach<test_types>(test, NumberSamples);
 }
 
-TEST(LexicalCast, PairIntString)
+TEST(LexicalCast, PairConvert)
 {
     auto p0 = std::make_pair(123, std::string{"abc"});
     auto p1 = std::make_pair(std::make_pair(123, std::string{"abc"}), 1.0);
     
-    check_lexical("123:abc", p0);
-    check_lexical("{123:abc}", p0);
-    check_lexical("{123:abc}:1.0", p1);
-    check_lexical("{{123:abc}:1.0}", p1);
+    check_lexical("123,abc", p0);
+    check_lexical("{123,abc}", p0);
+    check_lexical("{123,abc},1.0", p1);
+    check_lexical("{{123,abc},1.0}", p1);
 }
 
 TEST(LexicalCast, PairThrow)

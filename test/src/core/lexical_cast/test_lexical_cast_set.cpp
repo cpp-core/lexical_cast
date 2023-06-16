@@ -22,33 +22,21 @@ TEST(LexicalCast, SetGenerative)
     core::mp::foreach<test_types>(test, NumberSamples);
 }
 
-TEST(LexicalCast, SetInt)
+TEST(LexicalCast, SetConvert)
 {
-    std::set<int> value{123, 456, 789};
-    for (auto input : {"123,456,789", "{123,456,789}"})
-	check_lexical(input, value);
+    std::set<int> s0{123, 456, 789};
+    std::set<std::string> s1{""};
+    std::set<std::set<int>> s2{{12,34},{56,78}};
+    std::set<std::pair<int,std::string>> s3{{123,"abc"},{456,"def"}};
+    check_lexical("123,456,789", s0);
+    check_lexical("{123,456,789}", s0);
+    check_lexical("{\"\"}", s1);
+    check_lexical("{12,34},{56,78}", s2);
+    check_lexical("{{12,34},{56,78}}", s2);
+    check_lexical("{123,abc},{456,def}", s3);
+    check_lexical("[{123,abc},{456,def}]", s3);
 }
 
-TEST(LexicalCast, SetString)
-{
-    std::set<std::string> value{""};
-    for (auto input : {"{\"\"}"})
-	check_lexical(input, value);
-}
-
-TEST(LexicalCast, SetNested)
-{
-    std::set<std::set<int>> value{{12,34},{56,78}};
-    for (auto input : {"{12,34},{56,78}", "{{12,34},{56,78}}"})
-	check_lexical(input, value);
-}
-
-TEST(LexicalCast, SetPair)
-{
-    std::set<std::pair<int,std::string>> value{{123,"abc"},{456,"def"}};
-    for (auto input : {"{123:abc},{456:def}", "[{123:abc},{456:def}]"})
-	check_lexical(input, value);
-}
 
 TEST(LexicalCast, SetThrow)
 {

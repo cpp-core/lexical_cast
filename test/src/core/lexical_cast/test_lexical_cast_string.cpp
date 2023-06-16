@@ -3,12 +3,13 @@
 
 #include <gtest/gtest.h>
 #include "core/lexical_cast/string.h"
-#include "coro/stream/stream.h"
+#include "testing.h"
 
-using namespace core;
-using namespace coro;
+using namespace std::string_literals;
 
-const auto NumberSamples = 4;
+const auto NumberSamples = 64;
+
+CHECK_LEXICAL();
 
 TEST(LexicalCast, StringGenerative)
 {
@@ -18,16 +19,10 @@ TEST(LexicalCast, StringGenerative)
     }
 }
 
-TEST(LexicalCast, StringFromString)
+TEST(LexicalCast, StringConvert)
 {
-    std::string s = lexical_cast<std::string>("abc");
-    EXPECT_EQ(s, "abc");
-}
-
-TEST(LexicalCast, StringToString)
-{
-    std::string s = lexical_to_string("abc");
-    EXPECT_EQ(s, "abc");
+    check_lexical("abc", "abc"s);
+    check_lexical("\"abc\"", "abc"s);
 }
 
 int main(int argc, char *argv[])
