@@ -4,17 +4,37 @@
 #include <gtest/gtest.h>
 #include "core/lexical_cast/bool.h"
 #include "core/lexical_cast/error.h"
+#include "testing.h"
 
-using namespace core;
-using namespace std::string_literals;
+inline constexpr auto NumberSamples = 16;
 
-TEST(LexicalCast, BoolFromString)
+using test_types = core::mp::list_t<bool>;
+
+template<class T>
+void check_lexical(std::string_view input, const T& value) {
+    auto s = lexical_cast<T>(input);
+    EXPECT_EQ(s, value);
+    auto r = lexical_cast<T>(lexical_to_string(s));
+    EXPECT_EQ(r, s);
+}
+
+TEST(LexicalCast, BoolGenerative)
 {
-    for (auto str : {"0", "f", "F", "false"}) 
-	EXPECT_FALSE(lexical_cast<bool>(str));
+    auto test = []<class T>() {
+	for (auto s : sampler<T>() | take(NumberSamples))
+	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);
+    };
+
+    core::mp::foreach<test_types>(test);
+}
+
+TEST(LexicalCast, BoolConvert)
+{
+    for (auto str : {"0", "f", "F", "false"})
+	check_lexical(str, false);
 
     for (auto str : {"1", "t", "T", "true"})
-     	EXPECT_TRUE(lexical_cast<bool>(str));
+	check_lexical(str, true);
 }
 
 TEST(LexicalCast, BoolToString)

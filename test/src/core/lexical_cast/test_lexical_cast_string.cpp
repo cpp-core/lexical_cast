@@ -3,8 +3,20 @@
 
 #include <gtest/gtest.h>
 #include "core/lexical_cast/string.h"
+#include "coro/stream/stream.h"
 
 using namespace core;
+using namespace coro;
+
+const auto NumberSamples = 4;
+
+TEST(LexicalCast, StringGenerative)
+{
+    for (auto input : sampler<std::string>() | take(NumberSamples)) {
+	auto str = lexical_cast<std::string>(lexical_to_string(input));
+	EXPECT_EQ(str, input);
+    }
+}
 
 TEST(LexicalCast, StringFromString)
 {

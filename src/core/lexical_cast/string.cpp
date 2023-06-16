@@ -3,15 +3,17 @@
 
 #include "core/lexical_cast/string.h"
 #include "core/lexical_cast/error.h"
+#include "core/lexical_cast/util.h"
 
 namespace core::lexical_cast_detail {
 
 std::string lexical_cast_impl<std::string>::convert(std::string_view input) const {
-    return std::string(input);
+    auto [b, e] = unwrap(input.begin(), input.end());
+    return std::string(b, e);
 }
 
 std::string lexical_cast_impl<std::string>::to_string(std::string_view input) const {
-    return std::string(input);
+    return std::string("\"") + std::string(input) + "\"";
 }
 
 const char* lexical_cast_impl<const char*>::convert(std::string_view input) const {

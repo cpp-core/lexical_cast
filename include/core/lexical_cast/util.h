@@ -38,7 +38,6 @@ Iter find_close(Iter iter, Iter end, char c) {
     return iter;
 }
 
-
 template<class Iter>
 Iter find_first(Iter iter, Iter end, char c) {
     while (iter < end) {
@@ -62,6 +61,8 @@ Iter find_first(Iter iter, Iter end, char c) {
 
 template<class Iter>
 bool matching_delims(Iter iter, Iter end) {
+    if (*iter == OpenQuote and *(end - 1) == CloseQuote)
+	return true;
     if (*iter == OpenCurly and end - 1 == find_close(iter + 1, end, CloseCurly))
 	return true;
     if (*iter == OpenBracket and end - 1 == find_close(iter + 1, end, CloseBracket))

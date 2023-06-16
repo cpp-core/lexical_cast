@@ -9,6 +9,7 @@ namespace core {
 
 struct lexical_cast_error : public std::runtime_error {
     lexical_cast_error(std::string_view input, std::string_view type);
+    lexical_cast_error(std::string_view input, std::string_view type, std::string_view msg);
 };
 
 }; // core

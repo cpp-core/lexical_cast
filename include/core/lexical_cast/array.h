@@ -17,14 +17,14 @@ struct lexical_cast_impl<std::array<T, N>> {
 	std::array<T, N> arr{};
 	while (iter < end) {
 	    if (idx >= N)
-		throw lexical_cast_error(s, "too many elements for std::array");
+		throw lexical_cast_error(s, "std::array", "too many elements");
 	    auto delim = find_first(iter, end, ',');
 	    arr[idx] = lexical_cast<T>({iter, delim});
 	    iter = delim + 1;
 	    ++idx;
 	}
 	if (idx < N)
-	    throw lexical_cast_error(s, "too few elements for std::array");
+	    throw lexical_cast_error(s, "std::array", "too few elements");
 	return arr;
     }
 

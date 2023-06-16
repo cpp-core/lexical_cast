@@ -10,4 +10,9 @@ lexical_cast_error::lexical_cast_error(std::string_view input, std::string_view 
     : std::runtime_error(fmt::format("cannot parse '{:s}' as '{:s}'", input, type))
 { }
 
+lexical_cast_error::lexical_cast_error(std::string_view input, std::string_view type,
+				       std::string_view msg)
+    : std::runtime_error(fmt::format("cannot parse '{:s}' as '{:s}': {}", input, type, msg))
+{ }
+
 }; // end core

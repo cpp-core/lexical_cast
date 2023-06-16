@@ -6,41 +6,52 @@
 #include "core/lexical_cast/vector.h"
 #include "core/lexical_cast/pair.h"
 #include "core/lexical_cast/string.h"
+#include "testing.h"
 
-using namespace core;
+inline constexpr auto NumberSamples = 64;
+
+using test_types = core::mp::list_t
+    <std::array<unsigned int, 4>,
+     std::array<std::string, 3>,
+     std::array<std::pair<std::string,int>, 5>>;
+
+template<class T>
+void check_lexical(std::string_view input, const T& value) {
+    auto s = lexical_cast<T>(input);
+    EXPECT_EQ(s, value);
+    auto r = lexical_cast<T>(lexical_to_string(s));
+    EXPECT_EQ(r, s);
+}
+
+TEST(LexicalCast, ArrayGenerative)
+{
+    auto test = []<class T>() {
+	for (auto s : sampler<T>() | take(NumberSamples))
+	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);
+    };
+
+    core::mp::foreach<test_types>(test);
+}
 
 TEST(LexicalCast, ArrayInt)
 {
-    for (auto str : {"123,456,789", "{123,456,789}"}) {
-	auto arr = lexical_cast<std::array<int, 3>>(str);
-	EXPECT_EQ(arr.size(), 3);
-	EXPECT_EQ(arr[0], 123);
-	EXPECT_EQ(arr[1], 456);
-	EXPECT_EQ(arr[2], 789);
-	EXPECT_EQ(lexical_to_string(arr), "[123,456,789]");
-    }
+    std::array<int, 3> arr{ 123, 456, 789 };
+    for (auto str : {"123,456,789", "{123,456,789}"})
+	check_lexical(str, arr);
 }
 
 TEST(LexicalCast, ArrayNestedVector)
 {
-    for (auto str : {"{12,34},56", "{12,34},{56}", "{{12,34},56}"}) {
-	auto arr = lexical_cast<std::array<std::vector<int>, 2>>(str);
-	EXPECT_EQ(arr.size(), 2);
-	EXPECT_EQ(arr[0], (std::vector<int>{12, 34}));
-	EXPECT_EQ(arr[1], (std::vector<int>{56}));
-    }
+    std::array<std::vector<int>, 2> arr{std::vector{12, 34}, {56}};
+    for (auto str : {"{12,34},56", "{12,34},{56}", "{{12,34},56}"})
+	check_lexical(str, arr);
 }
 
 TEST(LexicalCast, ArrayPair)
 {
-    for (auto str : {"{123:abc},{456:def}", "[{123:abc},{456:def}]"}) {
-	auto arr = lexical_cast<std::array<std::pair<int,std::string>, 2>>(str);
-	EXPECT_EQ(arr.size(), 2);
-	EXPECT_EQ(arr[0].first, 123);
-	EXPECT_EQ(arr[0].second, "abc");
-	EXPECT_EQ(arr[1].first, 456);
-	EXPECT_EQ(arr[1].second, "def");
-    }
+    std::array<std::pair<int,std::string>, 2> arr{ std::pair{123, "abc"}, std::pair{456, "def"} };
+    for (auto str : {"{123:abc},{456:def}", "[{123:abc},{456:def}]"})
+	check_lexical(str, arr);
 }
 
 TEST(LexicalCast, ArrayThrow)
