@@ -5,39 +5,36 @@
 #include "core/lexical_cast/vector.h"
 #include "core/lexical_cast/pair.h"
 #include "core/lexical_cast/string.h"
+#include "testing.h"
 
-using namespace core;
+using namespace std::string_literals;
 
-TEST(LexicalCast, VectorInt)
+inline constexpr auto NumberSamples = 64;
+
+using test_types = core::mp::list_t
+    <std::vector<unsigned int>,
+     std::vector<std::string>,
+     std::vector<std::pair<int,std::string>>>;
+
+CHECK_LEXICAL();
+
+TEST(LexicalCast, VectorGenerative)
 {
-    for (auto str : {"123,456,789", "{123,456,789}"}) {
-	auto vec = lexical_cast<std::vector<int>>(str);
-	EXPECT_EQ(vec.size(), 3);
-	EXPECT_EQ(vec[0], 123);
-	EXPECT_EQ(vec[1], 456);
-	EXPECT_EQ(vec[2], 789);
-	EXPECT_EQ(lexical_to_string(vec), "[123,456,789]");
-    }
+    UNIVERSAL_TEST(test);
+    foreach<test_types>(test, NumberSamples);
 }
 
-TEST(LexicalCast, VectorNestedVector)
+TEST(LexicalCast, VectorConvert)
 {
-    for (auto str : {"{123,456},789", "{12,34},{56,78}"}) {
-	auto vec = lexical_cast<std::vector<std::vector<int>>>(str);
-	EXPECT_EQ(vec.size(), 2);
-    }
-}
-
-TEST(LexicalCast, VectorPair)
-{
-    for (auto str : {"{123:abc},{456:def}", "[{123:abc},{456:def}]"}) {
-	auto vec = lexical_cast<std::vector<std::pair<int,std::string>>>(str);
-	EXPECT_EQ(vec.size(), 2);
-	EXPECT_EQ(vec[0].first, 123);
-	EXPECT_EQ(vec[0].second, "abc");
-	EXPECT_EQ(vec[1].first, 456);
-	EXPECT_EQ(vec[1].second, "def");
-    }
+    auto v0 = std::vector<int>{123, 456, 789};
+    auto v1 = std::vector{std::vector<int>{12, 34}, std::vector<int>{56, 78}};
+    auto v2 = std::vector{std::pair{123, "abc"s}, std::pair{456, "def"s}};
+    check_lexical("123,456,789", v0);
+    check_lexical("{123,456,789}", v0);
+    check_lexical("{12,34},{56,78}", v1);
+    check_lexical("{{12,34},{56,78}}", v1);
+    check_lexical("{123,abc},{456,def}", v2);
+    check_lexical("{{123,abc},{456,def}}", v2);
 }
 
 TEST(LexicalCast, VectorThrow)

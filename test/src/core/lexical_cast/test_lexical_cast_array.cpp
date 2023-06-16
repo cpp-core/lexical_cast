@@ -8,6 +8,8 @@
 #include "core/lexical_cast/string.h"
 #include "testing.h"
 
+using namespace std::string_literals;
+
 inline constexpr auto NumberSamples = 64;
 
 using test_types = core::mp::list_t
@@ -23,25 +25,17 @@ TEST(LexicalCast, ArrayGenerative)
     core::mp::foreach<test_types>(test, NumberSamples);
 }
 
-TEST(LexicalCast, ArrayInt)
+TEST(LexicalCast, ArrayConvert)
 {
-    std::array<int, 3> arr{ 123, 456, 789 };
-    for (auto str : {"123,456,789", "{123,456,789}"})
-	check_lexical(str, arr);
-}
-
-TEST(LexicalCast, ArrayNestedVector)
-{
-    std::array<std::vector<int>, 2> arr{std::vector{12, 34}, {56}};
-    for (auto str : {"{12,34},56", "{12,34},{56}", "{{12,34},56}"})
-	check_lexical(str, arr);
-}
-
-TEST(LexicalCast, ArrayPair)
-{
-    std::array<std::pair<int,std::string>, 2> arr{ std::pair{123, "abc"}, std::pair{456, "def"} };
-    for (auto str : {"{123:abc},{456:def}", "[{123:abc},{456:def}]"})
-	check_lexical(str, arr);
+    std::array<int, 3> a0{ 123, 456, 789 };
+    std::array<std::vector<int>, 2> a1{std::vector{12, 34}, {56}};
+    std::array<std::pair<int,std::string>, 2> a2{ std::pair{123, "abc"s}, std::pair{456, "def"s} };
+    check_lexical("123,456,789", a0);
+    check_lexical("{123,456,789}", a0);
+    check_lexical("{12,34},56", a1);
+    check_lexical("{12,34},{56}", a1);
+    check_lexical("{123,abc},{456,def}", a2);
+    check_lexical("[{123,abc},{456,def}]", a2);
 }
 
 TEST(LexicalCast, ArrayThrow)

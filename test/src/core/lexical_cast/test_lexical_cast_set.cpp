@@ -14,13 +14,7 @@ using test_types = core::mp::list_t
      std::set<int>,
      std::set<std::string>>;
 
-template<class T>
-void check_lexical(std::string_view input, const T& value) {
-    auto s = lexical_cast<T>(input);
-    EXPECT_EQ(s, value);
-    auto r = lexical_cast<T>(lexical_to_string(s));
-    EXPECT_EQ(r, s);
-}
+CHECK_LEXICAL();
 
 TEST(LexicalCast, SetGenerative)
 {

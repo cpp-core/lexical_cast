@@ -1,42 +1,38 @@
 // Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
 //
 
-#include <string>
 #include <gtest/gtest.h>
 #include "core/lexical_cast/pair.h"
 #include "core/lexical_cast/string.h"
+#include "testing.h"
 
-using namespace core;
+inline constexpr auto NumberSamples = 64;
+
+using test_types = list_t
+    <std::pair<int, std::string>>;
+
+CHECK_LEXICAL();
+
+TEST(LexicalCast, PairGenerative)
+{
+    UNIVERSAL_TEST(test);
+    foreach<test_types>(test, NumberSamples);
+}
 
 TEST(LexicalCast, PairIntString)
 {
-    using Pair = std::pair<int,std::string>;
-    for (auto str : {"123:abc", "{123:abc}"}) {
-	auto pair = lexical_cast<Pair>(str);
-	auto [i, s] = pair;
-	EXPECT_EQ(i, 123);
-	EXPECT_EQ(s, "abc");
-	EXPECT_EQ(lexical_cast<Pair>(lexical_to_string(pair)), pair);
-    }
-}
-
-TEST(LexicalCast, PairNestedPair)
-{
-    using InnerPair = std::pair<int,std::string>;
-    using Pair = std::pair<InnerPair,float>;
-    for (auto str : {"{123:abc}:1.0", "{{123:abc}:1.0}"}) {
-	auto pair = lexical_cast<Pair>(str);
-	auto [p, f] = pair;
-	auto [i, s] = p;
-	EXPECT_EQ(i, 123);
-	EXPECT_EQ(s, "abc");
-	EXPECT_EQ(f, 1.0);
-	EXPECT_EQ(lexical_cast<Pair>(lexical_to_string(pair)), pair);
-    }
+    auto p0 = std::make_pair(123, std::string{"abc"});
+    auto p1 = std::make_pair(std::make_pair(123, std::string{"abc"}), 1.0);
+    
+    check_lexical("123:abc", p0);
+    check_lexical("{123:abc}", p0);
+    check_lexical("{123:abc}:1.0", p1);
+    check_lexical("{{123:abc}:1.0}", p1);
 }
 
 TEST(LexicalCast, PairThrow)
 {
+    EXPECT_THROW((lexical_cast<std::pair<int,std::string>>("123")), lexical_cast_error);
     EXPECT_THROW((lexical_cast<std::pair<int,std::string>>("12x:abc")), lexical_cast_error);
 }
 

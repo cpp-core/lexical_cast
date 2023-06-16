@@ -18,14 +18,10 @@ TEST(LexicalCast, CharGenerative)
     core::mp::foreach<test_types>(test, NumberSamples);
 }
 
-TEST(LexicalCast, CharFromString)
+TEST(LexicalCast, CharConvert)
 {
-    EXPECT_EQ(lexical_cast<char>("a"), 'a');
-}
-
-TEST(LexicalCast, CharToString)
-{
-    EXPECT_EQ(lexical_to_string('a'), "a");
+    check_lexical("a", 'a');
+    check_lexical("b", 'b');
 }
 
 TEST(LexicalCast, CharThrow)
