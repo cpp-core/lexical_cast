@@ -10,22 +10,12 @@ inline constexpr auto NumberSamples = 16;
 
 using test_types = core::mp::list_t<bool>;
 
-template<class T>
-void check_lexical(std::string_view input, const T& value) {
-    auto s = lexical_cast<T>(input);
-    EXPECT_EQ(s, value);
-    auto r = lexical_cast<T>(lexical_to_string(s));
-    EXPECT_EQ(r, s);
-}
+CHECK_LEXICAL();
 
 TEST(LexicalCast, BoolGenerative)
 {
-    auto test = []<class T>() {
-	for (auto s : sampler<T>() | take(NumberSamples))
-	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);
-    };
-
-    core::mp::foreach<test_types>(test);
+    UNIVERSAL_TEST(test);
+    core::mp::foreach<test_types>(test, NumberSamples);
 }
 
 TEST(LexicalCast, BoolConvert)

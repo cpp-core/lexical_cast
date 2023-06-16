@@ -4,8 +4,19 @@
 #include <gtest/gtest.h>
 #include "core/lexical_cast/char.h"
 #include "core/lexical_cast/error.h"
+#include "testing.h"
 
-using namespace core;
+inline constexpr auto NumberSamples = 64;
+
+using test_types = core::mp::list_t<char>;
+
+CHECK_LEXICAL();
+
+TEST(LexicalCast, CharGenerative)
+{
+    UNIVERSAL_TEST(test);
+    core::mp::foreach<test_types>(test, NumberSamples);
+}
 
 TEST(LexicalCast, CharFromString)
 {

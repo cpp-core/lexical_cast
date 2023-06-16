@@ -24,12 +24,8 @@ void check_lexical(std::string_view input, const T& value) {
 
 TEST(LexicalCast, SetGenerative)
 {
-    auto test = []<class T>() {
-	for (auto s : sampler<T>() | take(NumberSamples))
-	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);
-    };
-
-    core::mp::foreach<test_types>(test);
+    UNIVERSAL_TEST(test);
+    core::mp::foreach<test_types>(test, NumberSamples);
 }
 
 TEST(LexicalCast, SetInt)
