@@ -8,20 +8,20 @@
 
 using namespace std::string_literals;
 
-// inline constexpr auto NumberSamples = 64;
+inline constexpr auto NumberSamples = 64;
 
 CHECK_LEXICAL();
 
-// using test_types = core::mp::list_t
-//     <std::tuple<unsigned int,std::string>,
-//      std::tuple<std::string>,
-//      std::tuple<std::string, bool>>;
+using test_types = core::mp::list_t
+    <std::tuple<unsigned int,std::string>,
+     std::tuple<std::string>,
+     std::tuple<std::string, bool>>;
 
-// TEST(LexicalCast, TupleGenerative)
-// {
-//     UNIVERSAL_TEST(test);
-//     foreach<test_types>(test, NumberSamples);
-// }
+TEST(LexicalCast, TupleGenerative)
+{
+    UNIVERSAL_TEST(test);
+    foreach<test_types>(test, NumberSamples);
+}
 
 TEST(LexicalCast, TupleConvert)
 {
