@@ -1,6 +1,6 @@
 [![Build](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml)
 
-# `lexical_cast` and `lexical_to_string`: ergonomic, type-safe, and extension conversion between values and literal text.
+# Ergonomic, Type-Safe, and Extensible Conversions
 
 ## Motivation
 
@@ -27,7 +27,7 @@ box and are easily extensible to user-defined types.
 
 The `lexical` functions are designed to work with value-types,
 i.e. pointers are represented by the pointed to address and not the
-pointed to object. There is not support for following a graph of
+pointed to object. There is no support for following a graph of
 objects.
 
 The `lexical` functions are not designed for the general
