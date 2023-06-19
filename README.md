@@ -7,21 +7,21 @@
 Values often need to be converted from or to literal text,
 e.g. converting between `std::vector<int>` and `std::string`. This is
 a common task when reading command line arguments or a configuration
-file or when logging output about the program state. Consider the
-following code snippet,
-
-```c++
-auto vec = lexical_cast<std::vector<int>>("[1, 2, 3]");
-assert(vec.size() == 3 and vec[0] == 1 and vec[1] == 2 and vec[2] == 3);
-assert(lexical_to_string(vec) == "[1,2,3]");
-```
+file or when logging output about the program state. 
 
 The `lexical_cast` library is a header-only library that provides the
 `lexical_cast` and `lexical_to_string` template functions for
 convenient, type-safe, and extensible conversions between program
 values and literal text. The `lexical` functions support the `C++`
 standard library types such as `std::vector` and `std::map` out of the
-box and are easily extensible to user-defined types.
+box and are easily extensible to user-defined types as demonstrated by
+the following code snippet.
+
+```c++
+auto vec = lexical_cast<std::vector<int>>("[1, 2, 3]");
+assert(vec.size() == 3 and vec[0] == 1 and vec[1] == 2 and vec[2] == 3);
+assert(lexical_to_string(vec) == "[1,2,3]");
+```
 
 ## Non-Goals
 
