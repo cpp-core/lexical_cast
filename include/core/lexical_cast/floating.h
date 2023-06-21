@@ -2,6 +2,7 @@
 //
 
 #pragma once
+#include <charconv>
 #include "impl.h"
 
 namespace core::lexical_cast_detail {
@@ -23,5 +24,9 @@ struct lexical_cast_impl<long double> {
     long double convert(std::string_view s) const;
     std::string to_string(long double) const;
 };
+
+std::from_chars_result from_chars(const char *begin, const char *end, float& value);
+std::from_chars_result from_chars(const char *begin, const char *end, double& value);
+std::from_chars_result from_chars(const char *begin, const char *end, long double& value);
 
 }; // core::lexical_cast_detail
