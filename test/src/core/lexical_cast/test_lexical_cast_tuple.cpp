@@ -12,15 +12,16 @@ inline constexpr auto NumberSamples = 64;
 
 CHECK_LEXICAL();
 
-using test_types = core::mp::list_t
-    <std::tuple<unsigned int,std::string>,
-     std::tuple<std::string>,
-     std::tuple<std::string, bool>>;
+using test_types = std::tuple<
+    std::tuple<unsigned int,std::string>,
+    std::tuple<std::string>,
+    std::tuple<std::string, bool>
+    >;
 
 TEST(LexicalCast, TupleGenerative)
 {
     UNIVERSAL_TEST(test);
-    foreach<test_types>(test, NumberSamples);
+    fold_seq_list<test_types>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, TupleConvert)

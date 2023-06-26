@@ -8,14 +8,12 @@
 
 inline constexpr auto NumberSamples = 64;
 
-using test_types = core::mp::list_t<char>;
-
 CHECK_LEXICAL();
 
 TEST(LexicalCast, CharGenerative)
 {
     UNIVERSAL_TEST(test);
-    core::mp::foreach<test_types>(test, NumberSamples);
+    fold_seq<char>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, CharConvert)

@@ -4,11 +4,10 @@
 #pragma once
 #include <gtest/gtest.h>
 #include "coro/stream/stream.h"
-#include "core/mp/foreach.h"
 
 using namespace core;
 using namespace coro;
-using std::cout, std::endl, core::mp::foreach, core::mp::list_t;
+using std::cout, std::endl;
 
 #define CHECK_LEXICAL() \
     template<class T>							\
@@ -25,4 +24,24 @@ using std::cout, std::endl, core::mp::foreach, core::mp::list_t;
 	    EXPECT_EQ(lexical_cast<T>(lexical_to_string(s)), s);	\
     };
 
+template<template<class...> class Op, class T>
+struct dapply;
 
+template<template<class...> class Op, template<class...> class T, class... Ts>
+struct dapply<Op, T<Ts...>> {
+    template<class... Args>
+    auto operator()(Args&&... args) const {
+	return Op<Ts...>{}(std::forward<Args>(args)...);
+    }
+};
+
+template<class... Ts>
+struct fold_seq {
+    template<class F, class... Args>
+    auto operator()(F&& func, Args&&... args) const {
+	return (func.template operator()<Ts>(std::forward<Args>(args)...), ...);
+    }
+};
+
+template<class T>
+using fold_seq_list = dapply<fold_seq, T>;

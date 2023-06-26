@@ -11,17 +11,18 @@ using namespace std::string_literals;
 
 inline constexpr auto NumberSamples = 64;
 
-using test_types = core::mp::list_t
-    <std::vector<unsigned int>,
-     std::vector<std::string>,
-     std::vector<std::pair<int,std::string>>>;
+using test_types = std::tuple<
+    std::vector<unsigned int>,
+    std::vector<std::string>,
+    std::vector<std::pair<int,std::string>>
+    >;
 
 CHECK_LEXICAL();
 
 TEST(LexicalCast, VectorGenerative)
 {
     UNIVERSAL_TEST(test);
-    foreach<test_types>(test, NumberSamples);
+    fold_seq_list<test_types>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, VectorConvert)

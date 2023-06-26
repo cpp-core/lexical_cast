@@ -8,14 +8,12 @@
 
 inline constexpr auto NumberSamples = 16;
 
-using test_types = core::mp::list_t<bool>;
-
 CHECK_LEXICAL();
 
 TEST(LexicalCast, BoolGenerative)
 {
     UNIVERSAL_TEST(test);
-    core::mp::foreach<test_types>(test, NumberSamples);
+    fold_seq<bool>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, BoolConvert)

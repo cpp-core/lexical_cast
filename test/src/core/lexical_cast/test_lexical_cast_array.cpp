@@ -12,17 +12,18 @@ using namespace std::string_literals;
 
 inline constexpr auto NumberSamples = 64;
 
-using test_types = core::mp::list_t
-    <std::array<unsigned int, 4>,
-     std::array<std::string, 3>,
-     std::array<std::pair<std::string,int>, 5>>;
+using test_types = std::tuple<
+    std::array<unsigned int, 4>,
+    std::array<std::string, 3>,
+    std::array<std::pair<std::string,int>, 5>
+    >;
 
 CHECK_LEXICAL();
 
 TEST(LexicalCast, ArrayGenerative)
 {
     UNIVERSAL_TEST(test);
-    core::mp::foreach<test_types>(test, NumberSamples);
+    fold_seq_list<test_types>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, ArrayConvert)

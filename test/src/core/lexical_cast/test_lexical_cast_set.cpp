@@ -9,17 +9,18 @@
 
 inline constexpr auto NumberSamples = 64;
 
-using test_types = core::mp::list_t
-    <std::set<unsigned int>,
-     std::set<int>,
-     std::set<std::string>>;
+using test_types = std::tuple<
+    std::set<unsigned int>,
+    std::set<int>,
+    std::set<std::string>
+    >;
 
 CHECK_LEXICAL();
 
 TEST(LexicalCast, SetGenerative)
 {
     UNIVERSAL_TEST(test);
-    core::mp::foreach<test_types>(test, NumberSamples);
+    fold_seq_list<test_types>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, SetConvert)

@@ -57,7 +57,7 @@ message("-- lexical_cast: docs ${LEXICAL_CAST_DOCS}")
 # Add our dependencies
 #
 add_fmt()
-add_mp()
+add_pp()
 
 # Build the library
 #
@@ -84,7 +84,7 @@ file(GLOB_RECURSE PUBLIC_INCLUDE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} incl
 target_sources(lexical_cast INTERFACE FILE_SET HEADERS BASE_DIRS include FILES ${PUBLIC_INCLUDE_FILES})
 
 target_include_directories(lexical_cast PUBLIC include)
-target_link_libraries(lexical_cast PUBLIC mp::mp fmt::fmt)
+target_link_libraries(lexical_cast PUBLIC pp::pp fmt::fmt)
 
 foreach(prog
     lexical_cast0

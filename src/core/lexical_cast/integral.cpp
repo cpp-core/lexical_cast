@@ -5,16 +5,13 @@
 #include <charconv>
 #include "core/lexical_cast/integral.h"
 #include "core/lexical_cast/error.h"
-#include "core/mp/traits/type.h"
 #include "core/pp/map.h"
 
 namespace core::lexical_cast_detail {
 
 template<class T>
-T parse_integral(std::string_view input)
-{
-    try
-    {
+T parse_integral(std::string_view input, std::string_view name) {
+    try {
 	T value{0};
 	int base{10};
 	const char *start = input.begin();
@@ -27,22 +24,20 @@ T parse_integral(std::string_view input)
 	
 	auto r = std::from_chars(start, input.end(), value, base);
 	if (r.ptr != input.end())
-	    throw lexical_cast_error(input, mp::type_traits<T>::name);
+	    throw lexical_cast_error(input, name);
 	return value;
     }
-    catch (std::invalid_argument const&)
-    {
-	throw lexical_cast_error(input, mp::type_traits<T>::name);
+    catch (std::invalid_argument const&) {
+	throw lexical_cast_error(input, name);
     }
-    catch (std::out_of_range const&)
-    {
-	throw lexical_cast_error(input, mp::type_traits<T>::name);
+    catch (std::out_of_range const&) {
+	throw lexical_cast_error(input, name);
     }
 }
 
 #define CODE(T)								\
     T lexical_cast_impl<T>::convert(std::string_view input) const	\
-    { return parse_integral<T>(input); }				\
+    { return parse_integral<T>(input, #T); }				\
     std::string lexical_cast_impl<T>::to_string(T input) const		\
     { return std::to_string(input); }
 
@@ -53,4 +48,4 @@ CORE_PP_EVAL_MAP(CODE,							\
 		 signed long, signed long long);
 #undef CODE
 
-}; // core::lexical_casst_detail
+}; // core::lexical_cast_detail

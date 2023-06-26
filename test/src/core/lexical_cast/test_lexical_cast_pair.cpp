@@ -8,15 +8,14 @@
 
 inline constexpr auto NumberSamples = 64;
 
-using test_types = list_t
-    <std::pair<int, std::string>>;
+using test_types = std::tuple<std::pair<int, std::string>>;
 
 CHECK_LEXICAL();
 
 TEST(LexicalCast, PairGenerative)
 {
     UNIVERSAL_TEST(test);
-    foreach<test_types>(test, NumberSamples);
+    fold_seq_list<test_types>{}(test, NumberSamples);
 }
 
 TEST(LexicalCast, PairConvert)
