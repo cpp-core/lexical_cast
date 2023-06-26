@@ -15,7 +15,7 @@ struct lexical_cast_impl<std::pair<T,U>> {
 	auto [begin, end] = unwrap(s.begin(), s.end());
 	auto iter = find_first(begin, end, ',');
 	if (iter >= end)
-	    throw lexical_cast_error{s, "{first,second}"};
+	    throw lexical_cast_error{s, "(first,second)"};
 
 	auto first = lexical_cast<T>({begin, iter});
 	auto second = lexical_cast<U>({iter + 1, end});
@@ -23,11 +23,11 @@ struct lexical_cast_impl<std::pair<T,U>> {
     }
 
     std::string to_string(const std::pair<T, U>& pair) const {
-	std::string r = "{";
+	std::string r = "(";
 	r += lexical_to_string(pair.first);
 	r += ",";
 	r += lexical_to_string(pair.second);
-	r += "}";
+	r += ")";
 	return r;
     }
 };

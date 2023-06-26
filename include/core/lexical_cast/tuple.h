@@ -49,9 +49,9 @@ struct lexical_cast_impl<std::tuple<Ts...>> {
     }
 
     std::string to_string(const Tuple& tup) const {
-	std::string r = "{";
+	std::string r = "(";
 	stringify_tuple<0, sizeof...(Ts)>(r, tup);
-	r += "}";
+	r += ")";
 	return r;
     }
 };

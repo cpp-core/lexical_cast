@@ -31,11 +31,15 @@ TEST(LexicalCast, VectorConvert)
     auto v1 = std::vector{std::vector<int>{12, 34}, std::vector<int>{56, 78}};
     auto v2 = std::vector{std::pair{123, "abc"s}, std::pair{456, "def"s}};
     check_lexical("123,456,789", v0);
-    check_lexical("{123,456,789}", v0);
-    check_lexical("{12,34},{56,78}", v1);
-    check_lexical("{{12,34},{56,78}}", v1);
-    check_lexical("{123,abc},{456,def}", v2);
-    check_lexical("{{123,abc},{456,def}}", v2);
+    check_lexical("[123,456,789]", v0);
+    check_lexical("(12,34),(56,78)", v1);
+    check_lexical("[(12,34),(56,78)]", v1);
+    check_lexical("(123,abc),(456,def)", v2);
+    check_lexical("[(123,abc),(456,def)]", v2);
+
+    EXPECT_EQ(lexical_to_string(v0), "[123,456,789]");
+    EXPECT_EQ(lexical_to_string(v1), "[[12,34],[56,78]]");
+    EXPECT_EQ(lexical_to_string(v2), "[(123,\"abc\"),(456,\"def\")]");
 }
 
 TEST(LexicalCast, VectorThrow)

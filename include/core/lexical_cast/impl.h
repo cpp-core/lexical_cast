@@ -14,14 +14,19 @@ struct lexical_cast_impl;
 
 }; // lexical_cast_detail
 
+/// Return an instance of `T` corresponding to the string `input`. Will
+/// throw `lexical_cast_error` if `input` cannot be interpreted as an
+/// instance of T.
 template<class T>
 T lexical_cast(std::string_view input) {
     return lexical_cast_detail::lexical_cast_impl<T>{}.convert(input);
 }
 
+/// Return a `std::string` that represents `value`. The returned
+/// string can be passed to `lexical_cast<T>` to recover `value`.
 template<class T>
-std::string lexical_to_string(const T& input) {
-    return lexical_cast_detail::lexical_cast_impl<T>{}.to_string(input);
+std::string lexical_to_string(const T& value) {
+    return lexical_cast_detail::lexical_cast_impl<T>{}.to_string(value);
 }
 
 }; // core

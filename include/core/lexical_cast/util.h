@@ -15,6 +15,9 @@ inline constexpr char CloseCurly = '}';
 inline constexpr char OpenBracket = '[';
 inline constexpr char CloseBracket = ']';
 
+inline constexpr char OpenParen = '(';
+inline constexpr char CloseParen = ')';
+
 inline constexpr char OpenQuote = '"';
 inline constexpr char CloseQuote = '"';
 
@@ -28,6 +31,10 @@ Iter find_close(Iter iter, Iter end, char c) {
 
 	case OpenBracket:
 	    iter = find_close(++iter, end, CloseBracket);
+	    break;
+
+	case OpenParen:
+	    iter = find_close(++iter, end, CloseParen);
 	    break;
 
 	default:
@@ -51,6 +58,10 @@ Iter find_first(Iter iter, Iter end, char c) {
 	    iter = find_close(++iter, end, CloseBracket);
 	    break;
 
+	case OpenParen:
+	    iter = find_close(++iter, end, CloseParen);
+	    break;
+
 	default:
 	    if (*iter == c)
 		return iter;
@@ -67,6 +78,8 @@ bool matching_delims(Iter iter, Iter end) {
     if (*iter == OpenCurly and end - 1 == find_close(iter + 1, end, CloseCurly))
 	return true;
     if (*iter == OpenBracket and end - 1 == find_close(iter + 1, end, CloseBracket))
+	return true;
+    if (*iter == OpenParen and end - 1 == find_close(iter + 1, end, CloseParen))
 	return true;
     return false;
 }

@@ -23,10 +23,19 @@ TEST(LexicalCast, PairConvert)
     auto p0 = std::make_pair(123, std::string{"abc"});
     auto p1 = std::make_pair(std::make_pair(123, std::string{"abc"}), 1.0);
     
-    check_lexical("123,abc", p0);
-    check_lexical("{123,abc}", p0);
-    check_lexical("{123,abc},1.0", p1);
-    check_lexical("{{123,abc},1.0}", p1);
+    check_lexical(" 123 , abc ", p0);
+    check_lexical(" ( 123 , abc ) ", p0);
+    check_lexical("(123,abc),1.0", p1);
+    check_lexical("((123,abc),1.0)", p1);
+}
+
+TEST(LexicalCast, ToString)
+{
+    auto p0 = std::make_pair(123, std::string{"abc"});
+    auto p1 = std::make_pair(std::make_pair(123, std::string{"abc"}), 1.0);
+    
+    EXPECT_EQ(lexical_to_string(p0), R"((123,"abc"))");
+    EXPECT_EQ(lexical_to_string(p1), R"(((123,"abc"),1.000000))");
 }
 
 TEST(LexicalCast, PairThrow)

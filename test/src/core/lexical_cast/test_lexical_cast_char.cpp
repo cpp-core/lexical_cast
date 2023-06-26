@@ -25,6 +25,7 @@ TEST(LexicalCast, CharConvert)
 TEST(LexicalCast, CharThrow)
 {
     EXPECT_THROW(lexical_cast<char>(""), lexical_cast_error);
+    EXPECT_THROW(lexical_cast<char>("ab"), lexical_cast_error);
 }
 
 int main(int argc, char *argv[])

@@ -22,7 +22,7 @@ struct lexical_cast_impl<std::set<T>> {
     }
 
     std::string to_string(const std::set<T>& s) const {
-	std::string r = "{";
+	std::string r = "[";
 	bool sep{false};
 	for (auto elem : s) {
 	    if (sep)
@@ -30,7 +30,7 @@ struct lexical_cast_impl<std::set<T>> {
 	    r += lexical_to_string(elem);
 	    sep = true;
 	}
-	r += "}";
+	r += "]";
 	return r;
     }
 };

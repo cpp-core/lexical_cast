@@ -18,10 +18,10 @@ TEST(LexicalCast, BoolGenerative)
 
 TEST(LexicalCast, BoolConvert)
 {
-    for (auto str : {"0", "f", "F", "false"})
+    for (auto str : {"0", "f", "F", "false", " 0 ", " f ", " F ", "  false  "})
 	check_lexical(str, false);
 
-    for (auto str : {"1", "t", "T", "true"})
+    for (auto str : {"1", "t", "T", "true", " 1 ", " t ", " T ", " true "})
 	check_lexical(str, true);
 }
 
@@ -36,6 +36,8 @@ TEST(LexicalCast, BoolFromStringThrow)
     EXPECT_THROW(lexical_cast<bool>(""), lexical_cast_error);
     EXPECT_THROW(lexical_cast<bool>("2"), lexical_cast_error);
     EXPECT_THROW(lexical_cast<bool>("a"), lexical_cast_error);
+    EXPECT_THROW(lexical_cast<bool>("tt"), lexical_cast_error);
+    EXPECT_THROW(lexical_cast<bool>("falsef"), lexical_cast_error);
 }
 
 int main(int argc, char *argv[])

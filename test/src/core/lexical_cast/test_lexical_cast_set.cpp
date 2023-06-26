@@ -30,12 +30,17 @@ TEST(LexicalCast, SetConvert)
     std::set<std::set<int>> s2{{12,34},{56,78}};
     std::set<std::pair<int,std::string>> s3{{123,"abc"},{456,"def"}};
     check_lexical("123,456,789", s0);
-    check_lexical("{123,456,789}", s0);
-    check_lexical("{\"\"}", s1);
-    check_lexical("{12,34},{56,78}", s2);
-    check_lexical("{{12,34},{56,78}}", s2);
-    check_lexical("{123,abc},{456,def}", s3);
-    check_lexical("[{123,abc},{456,def}]", s3);
+    check_lexical("[123,456,789]", s0);
+    check_lexical("[\"\"]", s1);
+    check_lexical("(12,34),(56,78)", s2);
+    check_lexical("[(12,34),(56,78)]", s2);
+    check_lexical("(123,abc),(456,def)", s3);
+    check_lexical("[(123,abc),(456,def)]", s3);
+
+    EXPECT_EQ(lexical_to_string(s0), "[123,456,789]");
+    EXPECT_EQ(lexical_to_string(s1), "[\"\"]");
+    EXPECT_EQ(lexical_to_string(s2), "[[12,34],[56,78]]");
+    EXPECT_EQ(lexical_to_string(s3), "[(123,\"abc\"),(456,\"def\")]");
 }
 
 

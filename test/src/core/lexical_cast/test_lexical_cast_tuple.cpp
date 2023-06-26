@@ -13,7 +13,7 @@ inline constexpr auto NumberSamples = 64;
 CHECK_LEXICAL();
 
 using test_types = std::tuple<
-    std::tuple<unsigned int,std::string>,
+    std::tuple<unsigned int,std::string,double>,
     std::tuple<std::string>,
     std::tuple<std::string, bool>
     >;
@@ -28,7 +28,9 @@ TEST(LexicalCast, TupleConvert)
 {
     auto tup0 = std::make_tuple(123, "abc"s);
     check_lexical("123,abc", tup0);
-    check_lexical("{123,abc}", tup0);
+    check_lexical("(123,abc)", tup0);
+    check_lexical(" 123 , abc ", tup0);
+    check_lexical(" ( 123 , abc ) ", tup0);
 }
 
 TEST(LexicalCast, TupleThrow)
