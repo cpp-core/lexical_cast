@@ -57,25 +57,10 @@ message("-- lexical_cast: docs ${LEXICAL_CAST_DOCS}")
 # Add our dependencies
 #
 add_fmt()
-add_pp()
 
-# Build the library
+# Create the library as header only
 #
-set(SOURCES
-  bool
-  char
-  error
-  floating
-  integral
-  string
-  )
-
-set(FILES)
-foreach(SOURCE ${SOURCES})
-  list(APPEND FILES "src/core/lexical_cast/${SOURCE}.cpp")
-endforeach()
-
-add_library(lexical_cast ${FILES})
+add_library(lexical_cast INTERFACE)
 add_library(lexical_cast::lexical_cast ALIAS lexical_cast)
 
 # Define the header files for this library.
@@ -83,8 +68,8 @@ add_library(lexical_cast::lexical_cast ALIAS lexical_cast)
 file(GLOB_RECURSE PUBLIC_INCLUDE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} include/*.h)
 target_sources(lexical_cast INTERFACE FILE_SET HEADERS BASE_DIRS include FILES ${PUBLIC_INCLUDE_FILES})
 
-target_include_directories(lexical_cast PUBLIC include)
-target_link_libraries(lexical_cast PUBLIC pp::pp fmt::fmt)
+target_include_directories(lexical_cast INTERFACE include)
+target_link_libraries(lexical_cast INTERFACE fmt::fmt)
 
 foreach(prog
     lexical_cast0

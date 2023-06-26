@@ -3,13 +3,21 @@
 
 #pragma once
 #include "impl.h"
+#include "error.h"
 
 namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<char> {
-    char convert(std::string_view) const;
-    std::string to_string(char) const;
+    char convert(std::string_view input) const {
+	if (input.size() == 0)
+	    throw lexical_cast_error(input, "char");
+	return input[0];
+    }
+	
+    std::string to_string(char input) const {
+	return {input};
+    }
 };
 
 }; // core::lexical_cast_detail

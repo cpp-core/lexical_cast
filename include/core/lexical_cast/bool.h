@@ -3,13 +3,24 @@
 
 #pragma once
 #include "impl.h"
+#include "error.h"
 
 namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<bool> {
-    bool convert(std::string_view) const;
-    std::string to_string(bool) const;
+    bool convert(std::string_view input) const {
+	if (input == "0" or input == "f" or input == "F" or input == "false")
+	    return false;
+	if (input == "1" or input == "t" or input == "T" or input == "true")
+	    return true;
+	throw lexical_cast_error(input, "bool");
+    }
+	
+    std::string to_string(bool input) const {
+	if (input) return "t";
+	else return "f";
+    }
 };
 
 }; // core::lexical_cast_detail

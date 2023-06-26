@@ -2,68 +2,47 @@
 //
 
 #pragma once
+#include <charconv>
 #include "impl.h"
+#include "error.h"
 
 namespace core::lexical_cast_detail {
 
-template<>
-struct lexical_cast_impl<unsigned char> {
-    unsigned char convert(std::string_view) const;
-    std::string to_string(unsigned char) const;
-};
+template<std::integral T>
+T parse_integral(std::string_view input, std::string_view name) {
+    try {
+	T value{0};
+	int base{10};
+	const char *start = input.begin();
+	
+	if ((input.size() > 1) and (input[0] == '0') and
+	    ((input[1] == 'x') or input[1] == 'X')) {
+	    start += 2;
+	    base = 16;
+	}
+	
+	auto r = std::from_chars(start, input.end(), value, base);
+	if (r.ptr != input.end())
+	    throw lexical_cast_error(input, name);
+	return value;
+    }
+    catch (std::invalid_argument const&) {
+	throw lexical_cast_error(input, name);
+    }
+    catch (std::out_of_range const&) {
+	throw lexical_cast_error(input, name);
+    }
+}
 
-template<>
-struct lexical_cast_impl<unsigned short> {
-    unsigned short convert(std::string_view s) const;
-    std::string to_string(unsigned short) const;
-};
-
-template<>
-struct lexical_cast_impl<unsigned int> {
-    unsigned int convert(std::string_view s) const;
-    std::string to_string(unsigned int) const;
-};
-
-template<>
-struct lexical_cast_impl<unsigned long> {
-    unsigned long convert(std::string_view s) const;
-    std::string to_string(unsigned long) const;
-};
-
-template<>
-struct lexical_cast_impl<unsigned long long> {
-    unsigned long long convert(std::string_view s) const;
-    std::string to_string(unsigned long long) const;
-};
-
-template<>
-struct lexical_cast_impl<signed char> {
-    signed char convert(std::string_view) const;
-    std::string to_string(signed char) const;
-};
-
-template<>
-struct lexical_cast_impl<signed short> {
-    signed short convert(std::string_view s) const;
-    std::string to_string(signed short) const;
-};
-
-template<>
-struct lexical_cast_impl<signed int> {
-    signed int convert(std::string_view s) const;
-    std::string to_string(signed int) const;
-};
-
-template<>
-struct lexical_cast_impl<signed long> {
-    signed long convert(std::string_view s) const;
-    std::string to_string(signed long) const;
-};
-
-template<>
-struct lexical_cast_impl<signed long long> {
-    signed long long convert(std::string_view s) const;
-    std::string to_string(signed long long) const;
+template<std::integral T>
+struct lexical_cast_impl<T> {
+    T convert(std::string_view input) const {
+	return parse_integral<T>(input, "integral");
+    }
+    
+    std::string to_string(T input) const {
+	return std::to_string(input);
+    }
 };
 
 }; // core::lexical_cast_detail
