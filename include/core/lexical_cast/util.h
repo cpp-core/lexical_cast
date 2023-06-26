@@ -4,6 +4,7 @@
 #pragma once
 #include <utility>
 #include <cctype>
+#include <string_view>
 
 namespace core::lexical_cast_detail
 {
@@ -71,16 +72,27 @@ bool matching_delims(Iter iter, Iter end) {
 }
 
 template<class Iter>
-std::pair<Iter,Iter> unwrap(Iter iter, Iter end) {
-    while (iter < end and std::isspace(*iter))
-	++iter;
-    while (end > iter and std::isspace(*(end - 1)))
+std::pair<Iter,Iter> unwrap_ws(Iter begin, Iter end) {
+    while (begin < end and std::isspace(*begin))
+	++begin;
+    while (end > begin and std::isspace(*(end - 1)))
 	--end;
-    if (iter < end and matching_delims(iter, end)) {
-	++iter;
-	--end;
+    return {begin, end};
+}
+
+std::string_view unwrap_ws(std::string_view str) {
+    auto [b, e] = unwrap_ws(str.begin(), str.end());
+    return {b, e};
+}
+
+template<class Iter>
+std::pair<Iter,Iter> unwrap(Iter begin, Iter end) {
+    auto [b, e] = unwrap_ws(begin, end);
+    if (b < e and matching_delims(b, e)) {
+	++b;
+	--e;
     }
-    return {iter, end};
+    return {b, e};
 }
 
 }; // core::lexical_cast_detail

@@ -10,7 +10,7 @@ namespace core::lexical_cast_detail {
 template<>
 struct lexical_cast_impl<char> {
     char convert(std::string_view input) const {
-	if (input.size() == 0)
+	if (input.size() != 1)
 	    throw lexical_cast_error(input, "char");
 	return input[0];
     }

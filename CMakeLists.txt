@@ -72,6 +72,7 @@ target_include_directories(lexical_cast INTERFACE include)
 target_link_libraries(lexical_cast INTERFACE fmt::fmt)
 
 foreach(prog
+    lexical_cast_dictionary
     lexical_cast0
     lexical_cast1
     )

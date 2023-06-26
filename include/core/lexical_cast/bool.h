@@ -4,12 +4,14 @@
 #pragma once
 #include "impl.h"
 #include "error.h"
+#include "util.h"
 
 namespace core::lexical_cast_detail {
 
 template<>
 struct lexical_cast_impl<bool> {
-    bool convert(std::string_view input) const {
+    bool convert(std::string_view raw_input) const {
+	std::string_view input = unwrap_ws(raw_input);
 	if (input == "0" or input == "f" or input == "F" or input == "false")
 	    return false;
 	if (input == "1" or input == "t" or input == "T" or input == "true")

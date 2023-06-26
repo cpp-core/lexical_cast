@@ -5,6 +5,7 @@
 #include <charconv>
 #include "impl.h"
 #include "error.h"
+#include "util.h"
 
 namespace core::lexical_cast_detail {
 
@@ -46,7 +47,7 @@ T parse_floating_point(std::string_view input, std::string_view name) {
 template<std::floating_point T>
 struct lexical_cast_impl<T> {
     T convert(std::string_view input) const {
-	return parse_floating_point<T>(input, "floating point");
+	return parse_floating_point<T>(unwrap_ws(input), "floating point");
     }
     
     std::string to_string(T input) const {
