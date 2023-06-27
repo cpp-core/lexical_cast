@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.24 FATAL_ERROR)
 
 find_package(Threads REQUIRED)
-add_stream()
+add_repo(stream)
 
 set(TESTS
   lexical_cast/array

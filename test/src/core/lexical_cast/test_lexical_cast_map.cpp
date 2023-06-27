@@ -18,11 +18,11 @@ using test_types = std::tuple<
 
 CHECK_LEXICAL();
 
-// TEST(LexicalCast, MapGenerative)
-// {
-//     UNIVERSAL_TEST(test);
-//     fold_seq_list<test_types>{}(test, NumberSamples);
-// }
+TEST(LexicalCast, MapGenerative)
+{
+    UNIVERSAL_TEST(test);
+    fold_seq_list<test_types>{}(test, NumberSamples);
+}
 
 TEST(LexicalCast, MapConvert)
 {

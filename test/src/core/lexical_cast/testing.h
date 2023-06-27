@@ -9,7 +9,7 @@ using namespace core;
 using namespace coro;
 using std::cout, std::endl;
 
-#define CHECK_LEXICAL() \
+#define CHECK_LEXICAL()							\
     template<class T>							\
     void check_lexical(std::string_view input, const T& value) {	\
 	auto s = lexical_cast<T>(input);				\
