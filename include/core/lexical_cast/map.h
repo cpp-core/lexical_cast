@@ -4,6 +4,7 @@
 #pragma once
 #include <map>
 #include "builtin.h"
+#include "pair.h"
 #include "util.h"
 
 namespace core::lexical_cast_detail {
