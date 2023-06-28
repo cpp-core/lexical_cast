@@ -98,7 +98,7 @@ The builtin types are represented as text in a straightforward fashion.
     assert(i == 123);
 ```
 
-Working example: [`lexical_cast_builtin.cpp`](./src/tools/lexical_cast_builtin.cpp)
+Working example: [Builtin Types](./src/tools/lexical_cast_builtin.cpp)
 
 ## Standard Library Types
 
@@ -148,9 +148,9 @@ library.
     assert(v1.size() == 3 and v1[0] == 1 and v1[1] == 2 and v1[2] == 3);
 ```
 
-Working example: [`lexical_cast_stdlib.cpp`](./src/tools/lexical_cast_stdlib.cpp)
+Working example: [Standard Library Types](./src/tools/lexical_cast_stdlib.cpp)
 
-## User-Defined Type
+## User-Defined Types
 
 An implmentation for a user-defined type can be added in the same
 manner as the builtin and standard library types, e.g. see
@@ -194,7 +194,7 @@ struct lexical_cast_impl<Person> {
 }; // lexical_cast_detail
 ```
 
-Working example: [User-Define Person](./src/tools/lexical_cast_person.cpp)
+Working example: [User-Defined Person Type](./src/tools/lexical_cast_person.cpp)
 
 # Recipes
 
@@ -273,5 +273,5 @@ int main(int argc, const char *argv[]) {
 }
 ```
 
-Working example: [User-Defined Point](./src/tools/lexical_cast_point.cpp)
+Working example: [User-Defined Point Type](./src/tools/lexical_cast_point.cpp)
 
