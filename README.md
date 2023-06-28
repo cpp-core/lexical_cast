@@ -20,7 +20,7 @@ types are easily added as first class citizens.
 
 The `lexical` functions are designed to work with value-types and not
 for the general (de)serialization of arbitrary values. There is no
-support for following pointers or marking objects that is necessary
+support for following pointers and marking objects that is necessary
 for general (de)serialization functionality.
 
 ## Other Options
@@ -31,9 +31,29 @@ extensibility.
 
 # Tutorial
 
+The `lexical_cast` library provides the template functions
+`lexical_cast` and `lexical_to_string`, both in the core namespace,
+for converting text to values and values to text respectively. The
+template argument for `lexical_cast` must be supplied explicitly to
+indicate how the text is to be interpreted. The template argument for
+`lexical_to_string` will be deduced automatically.
+
+```c++
+template<class T> T lexical_cast(std::string_view text);
+template<class T> std::string lexical_to_string(const T& value);
+```
+
+The implmentation for a given type can be included individually such
+as including `core/lexical_cast/bool.h` for the bool type or
+`core/lexcial_cast/vector.h` for the `std::vector` type. More
+commonly, including `core/lexical_cast/builtin.h` will bring in the
+implementations for the builtin types and `core/lexical_cast/stdlib.h`
+for the standard library types. Including `core/lexical_cast/all.h`
+will pull in the kitchen sink.
+
 ## Builtin Types
 
-The builtin types are represented as text in a straightforward fashion. 
+The builtin types are represented as text in a straightforward fashion.
 - `bool`: will accept "t", "T" and "true" as `true` and "f", "F" and
   "false" as `false`.
 - `char`: maps to the corresponding single character string.
@@ -61,6 +81,8 @@ The builtin types are represented as text in a straightforward fashion.
     assert(i == 123);
 ```
 
+Working example: [`lexical_cast_builtin.cpp`](./src/tools/lexical_cast_builtin.cpp)
+
 ## Standard Library Types
 
 ```c++
@@ -85,6 +107,8 @@ The builtin types are represented as text in a straightforward fashion.
     auto v = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
     assert(v.size() == 3 and v[0] == 1 and v[1] == 2 and v[2] == 3);
 ```
+
+Working example: [`lexical_cast_stdlib.cpp`](./src/tools/lexical_cast_stdlib.cpp)
 
 # Recipes
 
