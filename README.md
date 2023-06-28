@@ -16,7 +16,9 @@ values and literal text. The `C++` builtin and standard library types
 (and compositions of such) are supported out of the box. User-defined
 types are easily added as first class citizens.
 
-The library is targeted to be more robust and complete than an adhoc
+The library is designed to faciliate the conversion between values and
+snippets of text that are easily readable and / or editable. The
+library is targeted to be more robust and complete than an adhoc
 solution, but simplier and more ergonomic than `C++` streams or a
 full-featured (de)serialization library.
 
@@ -32,6 +34,9 @@ assert(vec[1].first == 3.0 and vec[1].second == 4.0);
 ```
 
 ## Non-Goals
+
+While there are no enforced limits, the library is not designed for
+very large datasets (>100Mb).
 
 The library is not designed to support different output formats. An
 excellent library for `json` output is [nlohman/json
