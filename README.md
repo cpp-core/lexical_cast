@@ -35,14 +35,14 @@ assert(vec[1].first == 3.0 and vec[1].second == 4.0);
 
 The library is not designed to support different output formats. An
 excellent library for `json` output is [nlohman/json
-library](https://github.com/nlohmann/json) and for binary, [Google
+library](https://github.com/nlohmann/json) and for binary [Google
 protocolo buffers](https://github.com/protocolbuffers/protobuf).
 
-The library is not designed to work with reference or pointer
-types. Thus, it is not useful for the general (de)serialization of
-arbitrary values. There is no support for following pointers and
-marking objects that is necessary for general (de)serialization
-functionality. Good general libraries for (de)serialization include
+The library is not designed to work with pointer types. Thus, it is
+not useful for the general (de)serialization of arbitrary
+values. There is no support for following pointers and marking objects
+that is necessary for general (de)serialization functionality. Good
+general libraries for (de)serialization include
 [cereal](https://github.com/USCiLab/cereal) and
 [Boost::serialization](https://www.boost.org/doc/libs/1_80_0/libs/serialization/doc/index.html).
 
@@ -109,15 +109,18 @@ grouping character, the quotes are optional. The library will always
 use double quotes around a `std::string` that is output.
 
 For all other containers, the libary uses comma `,` as the delimiter
-between elements of a colleciton. The libary allows the use of square
-brackets `[`,`]`, curly braces `{`,`}`, or parentheses `(`,`)` as
-delimiters around a collection when interpreting text. The library
-outputs square brackets for `std::array`, `std::set`, and
-`std::vector`, parentheses for `std::pair` and `std::tuple`, and curly
-braces for `std::map`.
+between elements of a colleciton. The libary allows the use of
+appropriately matched square brackets `[`,`]`, curly braces `{`,`}`,
+or parentheses `(`,`)` as delimiters around a collection when
+interpreting text. The library outputs square brackets for
+`std::array`, `std::set`, and `std::vector`, parentheses for
+`std::pair` and `std::tuple`, and curly braces for `std::map`.
 
-Generally, whitespace is allowed between elements of a collection and
-the delimiters, but no whitespace is output by the library.
+The outer-most pair of delimiters around a container are optional,
+i.e. "1,2,3" and "[1,2,3]" can both be read as a
+`std::vector<int>`. Also, whitespace is allowed between elements of a
+collection and the delimiters, but no whitespace is output by the
+library.
 
 ```c++
     auto a = core::lexical_cast<std::array<int,3>>("[1,2,3]");
@@ -138,11 +141,60 @@ the delimiters, but no whitespace is output by the library.
     auto t = core::lexical_cast<std::tuple<char,int,double>>("(a,1,2.0)");
     assert(t == std::make_tuple('a', 1, 2.0));
 
-    auto v = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
-    assert(v.size() == 3 and v[0] == 1 and v[1] == 2 and v[2] == 3);
+    auto v0 = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
+    assert(v0.size() == 3 and v0[0] == 1 and v0[1] == 2 and v0[2] == 3);
+    
+    auto v1 = core::lexical_cast<std::vector<int>>(" 1, 2, 3 ");
+    assert(v1.size() == 3 and v1[0] == 1 and v1[1] == 2 and v1[2] == 3);
 ```
 
 Working example: [`lexical_cast_stdlib.cpp`](./src/tools/lexical_cast_stdlib.cpp)
+
+## User-Defined Type
+
+An implmentation for a user-defined type can be added in the same
+manner as the builtin and standard library types, e.g. see
+[bool](./include/core/lexical_cast/bool.h) or
+[std::pair](./include/core/lexical_cast/pair.h).
+
+A specialization of the `lexical_cast_impl` struct must be
+implmemented in the `core::lexical_cast_detail` namespace. The
+`convert` function must be implemented in order to convert text into
+the user-defined type and the `to_string` function must be implemented
+in order to convert the user-defined type into a `std::string`. The
+two implementations must satisfy the identity property
+`convert(to_string(value)) == value`.
+
+In most cases, a user-defined type can dispatch the conversion work to
+a tuple of it's contained values as demonstrated in the following
+snippet.
+
+```c++
+struct Person {
+    std::string name;
+    int age;
+    double height;
+    bool operator==(const Person&) const = default;
+};
+
+namespace core::lexical_cast_detail {
+
+template<>
+struct lexical_cast_impl<Person> {
+    Person convert(std::string_view input) const {
+	auto [name, age, height] = lexical_cast<std::tuple<std::string,int,double>>(input);
+	return Person{name, age, height};
+    }
+
+    std::string to_string(const Person& p) const {
+	return lexical_to_string(std::make_tuple(p.name, p.age, p.height));
+    }
+};
+
+}; // lexical_cast_detail
+```
+
+Working example: [User-Define Person](./src/tools/lexical_cast_person.cpp)
 
 # Recipes
 
@@ -172,7 +224,7 @@ int main(int argc, const char *argv[]) {
 }
 ```
 
-File: [`lexical_cast_dictionary.cpp`](./src/tools/lexical_cast_dictionary.cpp)
+Working example: [Dictionary](./src/tools/lexical_cast_dictionary.cpp)
 
 ## Vector: `std::vector` of user-defined `Point` class
 
@@ -221,5 +273,5 @@ int main(int argc, const char *argv[]) {
 }
 ```
 
-File: [`lexical_cast_point.cpp`](./src/tools/lexical_cast_point.cpp)
+Working example: [User-Defined Point](./src/tools/lexical_cast_point.cpp)
 

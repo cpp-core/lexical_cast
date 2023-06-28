@@ -36,7 +36,10 @@ int main(int argc, const char *argv[]) {
     auto t = core::lexical_cast<std::tuple<char,int,double>>("(a,1,2.0)");
     assert(t == std::make_tuple('a', 1, 2.0));
 
-    auto v = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
-    assert(v.size() == 3 and v[0] == 1 and v[1] == 2 and v[2] == 3);
+    auto v0 = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
+    assert(v0.size() == 3 and v0[0] == 1 and v0[1] == 2 and v0[2] == 3);
+    
+    auto v1 = core::lexical_cast<std::vector<int>>(" 1, 2, 3 ");
+    assert(v1.size() == 3 and v1[0] == 1 and v1[1] == 2 and v1[2] == 3);
     return 0;
 }

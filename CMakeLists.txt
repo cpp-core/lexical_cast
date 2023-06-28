@@ -74,6 +74,7 @@ target_link_libraries(lexical_cast INTERFACE fmt::fmt)
 foreach(prog
     lexical_cast_builtin
     lexical_cast_dictionary
+    lexical_cast_person
     lexical_cast_point
     lexical_cast_stdlib
     lexical_cast0
