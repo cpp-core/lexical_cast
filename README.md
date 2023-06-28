@@ -11,23 +11,40 @@ a common task when reading command line arguments or configuration
 files or when logging output about program state.
 
 The `lexical_cast` library is a light-weight, header-only library that
-provides for ergonomic, type-safe, and extensible conversion between
+provides ergonomic, type-safe, and extensible conversion between
 values and literal text. The `C++` builtin and standard library types
 (and compositions of such) are supported out of the box. User-defined
 types are easily added as first class citizens.
 
+The library is targeted to be more robust and complete than an adhoc
+solution, but simplier and more ergonomic than `C++` streams or a
+full-featured (de)serialization library.
+
+As an example, the following code snippet reads a string representing
+a vector of real-valued points where each point is represented by a
+pair of doubles and returns a `std::vector<std::pair<double,double>>`.
+
+```c++
+auto vec = core::lexical_cast<std::vector<std::pair<double,double>>("[(1.0,2.0), (3.0,4.0)]");
+assert(vec.size() == 2);
+assert(vec[0].first == 1.0 and vec[0].second == 2.0);
+assert(vec[1].first == 3.0 and vec[1].second == 4.0);
+```
+
 ## Non-Goals
 
-The `lexical` functions are designed to work with value-types and not
-for the general (de)serialization of arbitrary values. There is no
-support for following pointers and marking objects that is necessary
-for general (de)serialization functionality.
+The library is not designed to support different output formats. An
+excellent library for `json` output is [nlohman/json
+library](https://github.com/nlohmann/json) and for binary, [Google
+protocolo buffers](https://github.com/protocolbuffers/protobuf).
 
-## Other Options
-
-The `C++` standard library has a number of facilities for performing
-conversions for the builtin types that vary in their use and
-extensibility.
+The library is not designed to work with reference or pointer
+types. Thus, it is not useful for the general (de)serialization of
+arbitrary values. There is no support for following pointers and
+marking objects that is necessary for general (de)serialization
+functionality. Good general libraries for (de)serialization include
+[cereal](https://github.com/USCiLab/cereal) and
+[Boost::serialization](https://www.boost.org/doc/libs/1_80_0/libs/serialization/doc/index.html).
 
 # Tutorial
 
@@ -36,7 +53,7 @@ The `lexical_cast` library provides the template functions
 for converting text to values and values to text respectively. The
 template argument for `lexical_cast` must be supplied explicitly to
 indicate how the text is to be interpreted. The template argument for
-`lexical_to_string` will be deduced automatically.
+`lexical_to_string` is deduced automatically.
 
 ```c++
 template<class T> T lexical_cast(std::string_view text);
@@ -84,6 +101,23 @@ The builtin types are represented as text in a straightforward fashion.
 Working example: [`lexical_cast_builtin.cpp`](./src/tools/lexical_cast_builtin.cpp)
 
 ## Standard Library Types
+
+For `std::string`, the library allows the use of double quotes `"` to
+delimit the characters of the string. If there is no ambiguity,
+i.e. the string does not contain whitespace, punctuation or another
+grouping character, the quotes are optional. The library will always
+use double quotes around a `std::string` that is output.
+
+For all other containers, the libary uses comma `,` as the delimiter
+between elements of a colleciton. The libary allows the use of square
+brackets `[`,`]`, curly braces `{`,`}`, or parentheses `(`,`)` as
+delimiters around a collection when interpreting text. The library
+outputs square brackets for `std::array`, `std::set`, and
+`std::vector`, parentheses for `std::pair` and `std::tuple`, and curly
+braces for `std::map`.
+
+Generally, whitespace is allowed between elements of a collection and
+the delimiters, but no whitespace is output by the library.
 
 ```c++
     auto a = core::lexical_cast<std::array<int,3>>("[1,2,3]");
