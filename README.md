@@ -3,7 +3,7 @@
 Ergonomic, Type-Safe, and Extensible Conversions
 ================================================
 
-# Motivation
+## Motivation
 
 Values often need to be converted from or to literal text,
 e.g. converting between `std::vector<int>` and `std::string`. This is
@@ -46,7 +46,7 @@ general libraries for (de)serialization include
 [cereal](https://github.com/USCiLab/cereal) and
 [Boost::serialization](https://www.boost.org/doc/libs/1_80_0/libs/serialization/doc/index.html).
 
-# Tutorial
+## Tutorial
 
 The `lexical_cast` library provides the template functions
 `lexical_cast` and `lexical_to_string`, both in the core namespace,
@@ -68,7 +68,7 @@ implementations for the builtin types and `core/lexical_cast/stdlib.h`
 for the standard library types. Including `core/lexical_cast/all.h`
 will pull in the kitchen sink.
 
-## Builtin Types
+### Builtin Types
 
 The builtin types are represented as text in a straightforward fashion.
 - `bool`: will accept "t", "T" and "true" as `true` and "f", "F" and
@@ -100,7 +100,7 @@ The builtin types are represented as text in a straightforward fashion.
 
 Working example: [Builtin Types](./src/tools/lexical_cast_builtin.cpp)
 
-## Standard Library Types
+### Standard Library Types
 
 For `std::string`, the library allows the use of double quotes `"` to
 delimit the characters of the string. If there is no ambiguity,
@@ -150,7 +150,7 @@ library.
 
 Working example: [Standard Library Types](./src/tools/lexical_cast_stdlib.cpp)
 
-## User-Defined Types
+### User-Defined Types
 
 An implmentation for a user-defined type can be added in the same
 manner as the builtin and standard library types, e.g. see
@@ -196,9 +196,9 @@ struct lexical_cast_impl<Person> {
 
 Working example: [User-Defined Person Type](./src/tools/lexical_cast_person.cpp)
 
-# Recipes
+## Recipes
 
-## Dictionary: `std::map` of `std::string` -> `int`
+### Dictionary: `std::map` of `std::string` -> `int`
 
 ```c++
 #undef NDEBUG
@@ -226,7 +226,7 @@ int main(int argc, const char *argv[]) {
 
 Working example: [Dictionary](./src/tools/lexical_cast_dictionary.cpp)
 
-## Vector: `std::vector` of user-defined `Point` class
+### Vector: `std::vector` of user-defined `Point` class
 
 ```c++
 #undef NDEBUG
