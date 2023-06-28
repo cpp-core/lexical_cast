@@ -31,9 +31,14 @@ extensibility.
 
 # Tutorial
 
-## Converting from text
+## Builtin Types
 
-### Builtin Types
+The builtin types are represented as text in a straightforward fashion. 
+- `bool`: will accept "t", "T" and "true" as `true` and "f", "F" and
+  "false" as `false`.
+- `char`: maps to the corresponding single character string.
+- integral types: will accept the same input as `stoi`, `stol` and `stoll`.
+- floating types: will accept the same input as `stof`, `stod` and `stold`.
 
 ```c++
     auto b0 = core::lexical_cast<bool>("f");
@@ -56,7 +61,7 @@ extensibility.
     assert(i == 123);
 ```
 
-### Standard Library Types
+## Standard Library Types
 
 ```c++
     auto a = core::lexical_cast<std::array<int,3>>("[1,2,3]");
