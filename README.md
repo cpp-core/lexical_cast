@@ -1,7 +1,8 @@
 [![Build](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml)
 
-Ergonomic, Type-Safe, and Extensible Conversions
-================================================
+{:toc}
+
+# Ergonomic, Type-Safe, and Extensible Conversions
 
 ## Motivation
 
