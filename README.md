@@ -31,9 +31,57 @@ extensibility.
 
 # Tutorial
 
+## Converting from text
+
+### Builtin Types
+
+```c++
+    auto b0 = core::lexical_cast<bool>("f");
+    auto b1 = core::lexical_cast<bool>("F");
+    auto b2 = core::lexical_cast<bool>("false");
+    assert(b0 == b1 == b2 == false);
+    
+    auto b3 = core::lexical_cast<bool>("t");
+    auto b4 = core::lexical_cast<bool>("T");
+    auto b5 = core::lexical_cast<bool>("true");
+    assert(b3 == b4 == b5 == true);
+
+    auto c = core::lexical_cast<char>("a");
+    assert(c == 'a');
+
+    auto f = core::lexical_cast<double>("12.3");
+    assert(f == 12.3);
+
+    auto i = core::lexical_cast<int>("123");
+    assert(i == 123);
+```
+
+### Standard Library Types
+
+```c++
+    auto a = core::lexical_cast<std::array<int,3>>("[1,2,3]");
+    assert(a[0] == 1 and a[1] == 2 and a[2] == 3);
+
+    auto m = core::lexical_cast<std::map<char,int>>("{(a,1),(b,2)}");
+    assert(m['a'] == 1 and m['b'] == 2);
+
+    auto p = core::lexical_cast<std::pair<char,int>>("(a,1)");
+    assert(p.first == 'a' and p.second == 1);
+
+    auto s = core::lexical_cast<std::set<int>>("[1,2,3]");
+    assert(s.size() == 3 and s.contains(1) and s.contains(2) and s.contains(3));
+
+    auto str = core::lexical_cast<std::string>(R"("abc")");
+    assert(str == "abc");
+
+    auto t = core::lexical_cast<std::tuple<char,int,double>>("(a,1,2.0)");
+    assert(t == std::make_tuple('a', 1, 2.0));
+
+    auto v = core::lexical_cast<std::vector<int>>("[1, 2, 3]");
+    assert(v.size() == 3 and v[0] == 1 and v[1] == 2 and v[2] == 3);
+```
+
 # Recipes
-
-
 
 ## Dictionary: `std::map` of `std::string` -> `int`
 
