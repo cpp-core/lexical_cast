@@ -1,8 +1,15 @@
 [![Build](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml/badge.svg)](https://github.com/cpp-core/lexical_cast/actions/workflows/build.yaml)
 
-{:toc}
-
 # Ergonomic, Type-Safe, and Extensible Conversions
+* [Motivation](#motivation)
+* [Non-Goals](#non-goals)
+* [Tutorial](#tutorial)
+   * [Builtin Types](#builtin-types)
+   * [Standard Library Types](#standard-library-types)
+   * [User-Defined Types](#user-defined-types)
+* [Recipes](#recipes)
+   * [Dictionary: std::map of std::string -&gt; int](#dictionary-stdmap-of-stdstring---int)
+   * [Vector: std::vector of user-defined Point class](#vector-stdvector-of-user-defined-point-class)
 
 ## Motivation
 
