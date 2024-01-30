@@ -1,4 +1,4 @@
-// Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
+// Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023, 2024 by Mark Melton
 //
 
 #pragma once
@@ -93,7 +93,7 @@ std::pair<Iter,Iter> unwrap_ws(Iter begin, Iter end) {
     return {begin, end};
 }
 
-std::string_view unwrap_ws(std::string_view str) {
+inline std::string_view unwrap_ws(std::string_view str) {
     auto [b, e] = unwrap_ws(str.begin(), str.end());
     return {b, e};
 }

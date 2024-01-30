@@ -1,4 +1,4 @@
-// Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023 by Mark Melton
+// Copyright (C) 2017, 2018, 2019, 2021, 2022, 2023, 2024 by Mark Melton
 //
 
 #pragma once
@@ -9,19 +9,19 @@
 
 namespace core::lexical_cast_detail {
 
-std::from_chars_result from_chars(const char *begin, const char *end, float& value) {
+inline std::from_chars_result from_chars(const char *begin, const char *end, float& value) {
     size_t idx{};
     value = stof(std::string(begin, end - begin), &idx);
     return { begin + idx };
 }
 
-std::from_chars_result from_chars(const char *begin, const char *end, double& value) {
+inline std::from_chars_result from_chars(const char *begin, const char *end, double& value) {
     size_t idx{};
     value = stod(std::string(begin, end - begin), &idx);
     return { begin + idx };
 }
 
-std::from_chars_result from_chars(const char *begin, const char *end, long double& value) {
+inline std::from_chars_result from_chars(const char *begin, const char *end, long double& value) {
     size_t idx{};
     value = stold(std::string(begin, end - begin), &idx);
     return { begin + idx };
