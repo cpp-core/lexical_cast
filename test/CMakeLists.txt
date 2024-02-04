@@ -9,6 +9,7 @@ set(TESTS
   lexical_cast/char
   lexical_cast/map
   lexical_cast/numbers
+  lexical_cast/optional
   lexical_cast/pair
   lexical_cast/set
   lexical_cast/string
