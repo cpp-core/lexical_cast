@@ -7,6 +7,7 @@ set(TESTS
   lexical_cast/array
   lexical_cast/bool
   lexical_cast/char
+  lexical_cast/chrono
   lexical_cast/map
   lexical_cast/numbers
   lexical_cast/optional
