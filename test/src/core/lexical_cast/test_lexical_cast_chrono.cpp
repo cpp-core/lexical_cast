@@ -16,9 +16,12 @@ TEST(LexicalCast, ChronoUniversal) {
     fold_seq<std::chrono::seconds,
              std::chrono::minutes,
              std::chrono::hours,
+	     std::chrono::day,
              std::chrono::days,
              std::chrono::weeks,
+	     std::chrono::month,
              std::chrono::months,
+             std::chrono::year,
              std::chrono::years>{}(test, NumberSamples);
 }
 
